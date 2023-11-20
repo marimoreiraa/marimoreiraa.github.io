@@ -3,48 +3,56 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mariana Moreira</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
-    <link rel="website icon" type="png" href="asset/coding.png">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="website icon" type="png" href="./assets/coding.png">
+    <title>Mariana Moreira</title>
 </head>
 
 <body>
-    <header>
-        <nav>
-            <img src="asset/coding.png" alt="">
+    <header class="container">
+        <div class="page-header">
+            <div class="logo">
+                <img src="./assets/coding.png" alt="">
+            </div>
+            <input type="checkbox" id="click">
+
+            <label for="click" class="mainicon">
+                <div class="menu">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </label>
             <ul>
-                <li><a href="#" class="active">Sobre</a></li>
-                <li><a href="#skills-loc">Skills</a></li>
-                <li><a href="#portfolio-loc">Portfolio</a></li>
-                <li><a href="#experience-loc">Experiencias</a></li>
-                <li><a href="#contact-loc">Contato</a></li>
-            </ul>       
-        </nav>
-        <div class="landing">
-            <div class="intro">
-                <h3><Span>Mariana D. Moreira</Span><br>Cloud Analyst<br>Site Reliability Engineering</h3>
-                <a href="#contact-loc">
-                    <button>Contato</button>
-                </a>
-            </div>
-            <div class="socials">
-                <div class="line"></div>
-                <a href="https://github.com/marimoreiraa" target="_blank">
-                    <i class="ri-github-fill"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/mariana-duarte-moreira/" target="_blank">
-                    <i class="ri-linkedin-fill"></i>
-                </a>
-                <a href="https://instagram.com/marianadmoreira_" target="_blank">
-                    <i class="ri-instagram-line"></i>
-                </a>
-            </div>
-            
+                <li><a href="#"  class="active" style="--navAni:1">Inicio</a></li>
+                <li><a href="#about-loc" style="--navAni:2">Sobre mim</a></li>
+                <li><a href="#skills-loc" style="--navAni:3">Skills</a></li>
+                <li><a href="#portfolio-loc" style="--navAni:4">Portfolio</a></li>
+                <li><a href="#exp-loc" style="--navAni:5">Experiencia</a></li>
+            </ul>
         </div>
     </header>
-    <section class="about">
+    <section class="container">
+        <div class="main">
+            <div class="images">
+                <img src="./assets/foto.jpg" alt="" class="img-w">
+            </div>
+            <div class="detail">
+                <h3>Oiii, Meu nome é</h3>
+                <h1><span style="color:#000080;">Mariana</span> D. Moreira</h1> 
+                <p>Cloud Analyst</p>  
+                <p>Site Reability Engineer</p>
+                <div class="social">
+                    <a href="https://www.linkedin.com/in/mariana-duarte-moreira/" style="--socialAni:1"><i class='bx bxl-linkedin'></i></a>
+                    <a href="https://instagram.com/marianadmoreira_" style="--socialAni:2"><i class='bx bxl-instagram'></i></a>
+                    <a href="https://github.com/marimoreiraa" style="--socialAni:3"><i class='bx bxl-github'></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="about" id="about-loc">
         <h1>Sobre mim</h1>
         <div class="description">
             <div class="line"></div>
@@ -53,122 +61,124 @@
                 Meu nome é Mariana, mas pode me chamar de Mari, e é um prazer enorme ter você aqui!
 
                 Como alguém apaixonada por tecnologia e entusiasta de dados, estou em uma jornada empolgante de aprendizado e crescimento constante. 💡
-                Meu caminho profissional começou na faculdade onde tive meu primeiro contato com Programação e logo de cara me apaixonei por essa area, com isso, busquei aprofundar minhas habilidades em Python e explorei os intrincados mundos do Cloud Computing através do bootcamp de Engenharia de Dados.
+                Meu caminho profissional começou na faculdade onde tive meu primeiro contato com Programação e logo de cara me apaixonei por essa area, com isso, busquei aprofundar minhas habilidades em 
+                Python e explorei os intrincados mundos do Cloud Computing através do bootcamp de Engenharia de Dados.
                 Desde então, mergulhei de cabeça no universo de dados, trabalhando como estagiária de Engenharia de Dados, onde aprendi ainda mais sobre Programação, Cloud Computing, Devops e SRE.
+                
                 Hoje, atuo como Analista de Cloud, na equipe de Site Reliability Engineer (SRE), onde desafios e inovação são a essência do meu dia a dia. 
                 A paixão por resolver problemas e otimizar infraestruturas é o que me motiva a enfrentar novos desafios com entusiasmo.
                 Estou sempre em busca de novas maneiras de melhorar, aprender e crescer. 🚀🌐
-                </p>
+            </p>
         </div>
     </section>
-   
     <section class="skills" id="skills-loc">
         <h1>Minhas Skills</h1>
         <div class="line"></div>
         <div class="cards">
             <div class="skill-card">
-                <img src="asset/amazon-web-services.svg" alt="">
+                <img src="./assets/amazon-web-services.svg" alt="">
                 <h2>AWS</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/gcp.png" alt="">
+                <img src="./assets/gcp.png" alt="">
                 <h2>GCP</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/elastic.png" alt="">
+                <img src="./assets/elastic.png" alt="">
                 <h2>Elastic Cloud</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/heroku.png" alt="">
+                <img src="./assets/heroku.png" alt="">
                 <h2>Heroku</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/opensearch.png" alt="">
+                <img src="./assets/opensearch.png" alt="">
                 <h2>Opensearch</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/git.svg" alt="">
+                <img src="./assets/git.svg" alt="">
                 <h2>GIT</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/gitlab.png" alt="">
+                <img src="./assets/gitlab.png" alt="">
                 <h2>Gitlab</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/github.png" alt="">
+                <img src="./assets/github.png" alt="">
                 <h2>Github</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/terraform.png" alt="">
+                <img src="./assets/terraform.png" alt="">
                 <h2>Terraform</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/jenkins.png" alt="">
+                <img src="./assets/jenkins.png" alt="">
                 <h2>Jenkins</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/grafana.png" alt="">
+                <img src="./assets/grafana.png" alt="">
                 <h2>Grafana</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/docker.png" alt="">
+                <img src="./assets/docker.png" alt="">
                 <h2>Docker</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/kubernetes.png" alt="">
+                <img src="./assets/kubernetes.png" alt="">
                 <h2>Kubernetes</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/helm.png" alt="">
+                <img src="./assets/helm.png" alt="">
                 <h2>Helm</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/linux-96.png" alt="">
+                <img src="./assets/linux-96.png" alt="">
                 <h2>Linux</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/python.svg" alt="">
+                <img src="./assets/python.svg" alt="">
                 <h2>Python</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/java.png" alt="">
+                <img src="./assets/java.png" alt="">
                 <h2>Java</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/css.svg" alt="">
+                <img src="./assets/css.svg" alt="">
                 <h2>CSS</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/html.svg" alt="">
+                <img src="./assets/html.svg" alt="">
                 <h2>HTML</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/springboot.png" alt="">
+                <img src="./assets/springboot.png" alt="">
                 <h2>Spring Boot</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/mongodb.svg" alt="">
+                <img src="./assets/mongodb.svg" alt="">
                 <h2>MongoDB</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/cassandra.png" alt="">
+                <img src="./assets/cassandra.png" alt="">
                 <h2>Cassandra</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/mysql.svg" alt="">
+                <img src="./assets/mysql.svg" alt="">
                 <h2>MySQL</h2>
             </div>
             <div class="skill-card">
-                <img src="asset/postgresql.png" alt="">
+                <img src="./assets/postgresql.png" alt="">
                 <h2>PostgreSQL</h2>
             </div>
         </div>
     </section>
+
     <section class="portfolio" id="portfolio-loc">
         <h1>Portfolio</h1>
         <div class="portfolio-cards">
             <div class="portfolio-card">
-                <img src="asset/images/pagerbeauty.png" alt="">
+                <img src="./assets/pagerbeauty.png" alt="">
                 <div class="overlay">
                     <h3>Pagerbeauty Helm Chart</h3>
                     <p>Helm Chart desenvolvido para facilitar a instalação e uso do PagerBeauty do PagerDuty.</p>
@@ -178,7 +188,7 @@
                 </div>
             </div>
             <div class="portfolio-card">
-                <img src="asset/images/todolist.png" alt="">
+                <img src="./assets/todolist.png" alt="">
                 <div class="overlay">
                     <h3>To-do List</h3>
                     <p>Projeto de um To-do List Simples utilizando Spring Boot (Java) e Thymeleaf
@@ -190,7 +200,7 @@
                 </div>
             </div>
             <div class="portfolio-card">
-                <img src="asset/images/library.png" alt="">
+                <img src="./assets/library.png" alt="">
                 <div class="overlay">
                     <h3>Library Managment System</h3>
                     <p>Projeto de um Sistema de Gerenciamento de Biblioteca utilizando Spring Boot
@@ -202,7 +212,7 @@
                 </div>
             </div>
             <div class="portfolio-card">
-                <img src="asset/images/chatbot.png" alt="">
+                <img src="./assets/chatbot.png" alt="">
                 <div class="overlay">
                     <h3>ChatBot Telegram</h3>
                     <p>ChatBot de Telegram personalizado para cliente utilizando Python.</p>
@@ -212,7 +222,7 @@
                 </div>
             </div>
             <div class="portfolio-card">
-                <img src="asset/images/projetod.png" alt="">
+                <img src="./assets/projetod.png" alt="">
                 <div class="overlay">
                     <h3>Projeto D.</h3>
                     <p>Projeto extra desenvolvido ao final do BootCamp de Engenharia de Dados que consistia em 
@@ -226,7 +236,7 @@
                 </div>
             </div>
             <div class="portfolio-card">
-                <img src="asset/images/bootcamp.png"">
+                <img src="./assets/bootcamp.png"">
                 <div class="overlay">
                     <h3>Projeto Bootcamp</h3>
                     <p>Projeto desenvolvido ao final do Bootcamp de Engenharia de Dados que consistia em extrair, 
@@ -239,71 +249,58 @@
             </div>
         </div>
     </section>
-    <section class="experience" id="experience-loc">
-        <div class="darker-div"></div>
+    
+    <section class="timeline-section" id="exp-loc">
         <h1>Experiencia</h1>
-        <div class="timeline">
-
-          <!--Well, The reason for this div is to fill space. 
-This space is technically used for keeping dates, 
-but I didn't find the need for dates. However, I'll provide 
-you the styling for dates, so that you can use it if you 
-wanted to.-->
-                  <div class="timeline-empty">
-                  </div>
-
-<!--This is the class where the timeline graphics are 
-housed in. Note that we have timeline-circle 
-here for that pointer in timeline.-->
-
-               <div class="timeline-middle">
-                   <div class="timeline-circle"></div>
-               </div>
-               <div class="timeline-component timeline-content">
-                <h2>Assessora de Negócios | 2019</h2>
-                <h3>Tristate - Empresa Júnior</h3>    
-                <p>Dentro da Empresa Júnior Tristate, atuei como Assessora de Negócios e 
-                    Diretora Coemrcial, onde estava diretamente conectada com os clientes 
-                    para oferecer as soluções da empresa e atrairmais leads. 
-                    Além disso, participei do desenvolvimento de projetos como Sites e 
-                    Softwares de Controle de Estoque e Fluxo de Caixa.
-                </p>
-           </div>
-                <div class="timeline-component timeline-content">
-                        <h2>Diretora Comercial | 2020</h2>
-                        <h3>Tristate - Empresa Júnior</h3>    
-                        <p>Dentro da Empresa Júnior Tristate, atuei como Assessora de Negócios e 
-                            Diretora Coemrcial, onde estava diretamente conectada com os clientes 
-                            para oferecer as soluções da empresa e atrairmais leads. 
-                            Além disso, participei do desenvolvimento de projetos como Sites e 
-                            Softwares de Controle de Estoque e Fluxo de Caixa.
-                        </p>
+        <div class="timeline-items">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2019</div>
+                <div class="timeline-content">
+                    <h2>Assessora de Negócios</h2>
+                    <h3>Tristate - Empresa Júnior</h3>   
+                    <p>Dentro da Empresa Júnior Tristate, atuei como Assessora de Negócios e 
+                        Diretora Coemrcial, onde estava diretamente conectada com os clientes 
+                        para oferecer as soluções da empresa e atrairmais leads. 
+                        Além disso, participei do desenvolvimento de projetos como Sites e 
+                        Softwares de Controle de Estoque e Fluxo de Caixa.
+                    </p>
                 </div>
-                <div class="timeline-middle">
-                    <div class="timeline-circle"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2020</div>
+                <div class="timeline-content">
+                    <h2>Diretora Comercial</h2>
+                    <h3>Tristate - Empresa Júnior</h3>    
+                    <p>Dentro da Empresa Júnior Tristate, atuei como Assessora de Negócios e 
+                        Diretora Coemrcial, onde estava diretamente conectada com os clientes 
+                        para oferecer as soluções da empresa e atrairmais leads. 
+                        Além disso, participei do desenvolvimento de projetos como Sites e 
+                        Softwares de Controle de Estoque e Fluxo de Caixa.
+                    </p>
                 </div>
-                <div class="timeline-empty">
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2021</div>
+                <div class="timeline-content">
+                    <h2>Data Engineer Bootcamp</h2>
+                    <h3>SoulCode Academy</h3>    
+                    <p>Realizei o Bootcamp de Engenharia de Dados na SoulCode Academy, 
+                       onde aprendi a utilizar a linguagem Python para importar, limpar
+                       e manipular bases de Dados com a biblioteca Pandas e também, aprendi
+                       sobre como utilizar a linguagem SQL dentro do BigQuery da Google Cloud
+                       Plataform. Além disso, aprendi como realizar requisições SQL e NoSQL 
+                       via Python, bem como o uso do Spark, através do PySpark e do SparkSQL. 
+                    </p>
                 </div>
-
-                <div class="timeline-empty">
-                </div>
-
-               <div class="timeline-middle">
-                   <div class="timeline-circle"></div>
-               </div>
-               <div class=" timeline-component timeline-content">
-                <h2>Data Engineer Bootcamp | 2021</h2>
-                <h3>SoulCode Academy</h3>    
-                <p>Realizei o Bootcamp de Engenharia de Dados na SoulCode Academy, 
-                   onde aprendi a utilizar a linguagem Python para importar, limpar
-                   e manipular bases de Dados com a biblioteca Pandas e também, aprendi
-                   sobre como utilizar a linguagem SQL dentro do BigQuery da Google Cloud
-                   Plataform. Além disso, aprendi como realizar requisições SQL e NoSQL 
-                   via Python, bem como o uso do Spark, através do PySpark e do SparkSQL. 
-                </p>
-           </div>
-                <div class="timeline-component timeline-content">
-                    <h2>Data Engineer Internship | 2022</h2>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2022</div>
+                <div class="timeline-content">
+                    <h2>Data Engineer Internship</h2>
                     <h3>ilegra</h3>    
                     <p>Como estagiária na ilegra, passei por 2 trilhas de conhecimentos
                        diferentes: A primeira foi a trilha de Core Engineering, onde aprendemos
@@ -314,49 +311,25 @@ here for that pointer in timeline.-->
                        e como evoluir um programa simples em Python com os conceitos e ferramentas de Devops.
                     </p>
                 </div>
-                <div class="timeline-middle">
-                    <div class="timeline-circle"></div>
-                </div>
-                <div class="timeline-empty">
-                </div>
-
-                <div class="timeline-empty">
-                </div>
-
-                <div class="timeline-middle">
-                    <div class="timeline-circle"></div>
-                </div>
-                <div class=" timeline-component timeline-content">
-                    <h2>Cloud Analyst | Site Reliability Engineering | 2023</h2>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2023</div>
+                <div class="timeline-content">
+                    <h2>Cloud Analyst | Site Reliability Engineering</h2>
                     <h3>ilegra</h3>    
                     <p>Atualmente, trabalhando como SRE, venho colocando em prática
                        tudo que aprendi em minhas experiências anteriores, além de 
                        estar aprendendo tecnologias e funcionalidades novas e estar me
                        desafiando (e evoluindo) todos os dias.
                     </p>
-            </div>               
-       </div>
-    </div> 
-    </section>
-    <section class="contact-me" id="contact-loc">
-        <h1>Entre em Contato</h1>
-        <div class="contact">
-            <div class="contact-card">
-                <i class="ri-linkedin-fill"></i>
-                    <p>Mariana Moreira</p>
-            </div>
-            <div class="contact-card">
-                <i class="ri-instagram-line"></i>
-                <p>@marianadmoreira_</p>
-                </a>
-            </div>
-            <div class="contact-card">
-                <i class="ri-map-pin-3-line"></i>
-                <p>Ouro Branco, MG</p>
+                </div>
             </div>
         </div>
     </section>
-    <script src="script.js"></script>
+    
+    <footer>
+        <p>Feito por Mariana Duarte</p>
+    </footer>
 </body>
-
 </html>
