@@ -1,8 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto:wght@100;300;400;500;700;900&display=swap");
-:root {
-  --primary-color: #000080;
-  --primary-dark: #1F252E;
-}
+
 
 * {
   margin: 0;
@@ -40,8 +37,6 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
-  width: 90%;
   padding: 1rem 0;
 }
 
