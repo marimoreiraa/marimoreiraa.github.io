@@ -258,7 +258,11 @@ footer p {
     }
 
     .sobre .descricao .line {
-      width: 200px;
+      width: 300px;
+    }
+
+    .cards {
+      padding: 0 2rem;
     }
     
     ul {
