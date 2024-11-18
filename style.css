@@ -247,7 +247,15 @@ footer p {
     header {
         height: auto;
     }
-  
+    
+    .container {
+      padding: 0 1.6rem;
+    }
+
+    .barraNav {
+      flex-direction: column;
+    }
+    
     ul {
         background: #e3b1c8;
         width: 100%;
