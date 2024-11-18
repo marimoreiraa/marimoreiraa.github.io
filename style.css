@@ -239,7 +239,7 @@ footer p {
     display: none;
   }
 
-  @media screen and (max-width:600px) {
+  @media only screen and (max-device-width:600px) {
     body {
         height: auto;
     }
@@ -249,7 +249,7 @@ footer p {
     }
     
     .container {
-      padding: 0 1.6rem;
+      padding: 0 2rem;
     }
 
     .barraNav {
@@ -278,5 +278,12 @@ footer p {
     #click:checked~ul {
         left: 0%;
         transition: all 0.3s ease;
+    }
+    .images {
+      width: 100%;
+      margin: auto;
+    }
+    .inicio  {
+      margin-top: 2rem;
     }
   }
