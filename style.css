@@ -252,6 +252,14 @@ footer p {
       height: auto;
       padding: 0 2rem;
     }
+
+    .sobre {
+      padding: 0 2rem;
+    }
+
+    .sobre .descricao .line {
+      width: 200px;
+    }
     
     ul {
         background: #e3b1c8;
