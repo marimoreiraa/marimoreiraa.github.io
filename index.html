@@ -1,106 +1,88 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="style.css">
-    <link rel="website icon" type="png" href="./arquivos/icon.png">
-    <title>Mariana Moreira</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mariana Moreira</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <header class="container">
-        <div class="barraNav">
-            <div class="logo">
-                <img src="./arquivos/icon.png" alt="">
+    <div class="container">
+        <div class="inicio">
+            <img src="foto.png" alt="Foto">
+        </div>
+        <div class="infos">
+            <h1>Mariana D. Moreira</h1>
+            <h2>Analista de Infraestrutura - SRE</h2>
+
+            <p><strong>Telefone:</strong> (37)9999-9999</p>
+            <p><strong>Email:</strong> mariana@gmail.com</p>
+            <p><strong>Endereço:</strong> Ouro Branco, MG</p>
+            <div class="social">
+                <a href="https://www.linkedin.com/in/mariana-duarte-moreira/"><i class='bx bxl-linkedin'></i></a>
+                <a href="https://instagram.com/marianadmoreira_"><i class='bx bxl-instagram'></i></a>
+                <a href="https://github.com/marimoreiraa"><i class='bx bxl-github'></i></a>
             </div>
-            <input type="checkbox" id="click">
+        </div>
+    </div>
 
-            <label for="click" class="mainicon">
-                <div class="menu">
-                    <i class='bx bx-menu'></i>
-                </div>
-            </label>
+    <div class="sobre-container">
+        <div class="sobre">
+            <h2>Sobre mim</h2>
+            <div class="linha"></div>
+              <p>
+                Sou apaixonada por tecnologia e atualmente trabalho como Analista de Infraestrutura com foco em SRE.
+                Tenho experiência em automação, monitoramento e melhoria contínua de sistemas críticos.
+                Gosto de resolver problemas e aprender algo novo todos os dias.
+              </p>
+        </div>
 
+        <div class="habilidades">
+            <h2>Habilidades</h2>
+            <div class="linha"></div>
             <ul>
-                <li><a href="#"  class="ativo">Inicio</a></li>
-                <li><a href="#sobre">Sobre mim</a></li>
-                <li><a href="#hobbies">Hobbies</a></li>
-
+            <li>Linux / Shell Script</li>
+            <li>Docker e Kubernetes</li>
+            <li>Monitoramento (Prometheus, Grafana)</li>
+            <li>CI/CD (GitHub Actions, GitLab)</li>
+            <li>Cloud (AWS, GCP)</li>
+            <li>Automação com Ansible</li>
             </ul>
         </div>
-    </header>
-    <section class="container">
-        <div class="inicio">
-            <div class="images">
-                <img src="./arquivos/foto.png" alt="" class="img-w">
-            </div>
-            <div class="detail">
-                <h3>Oiii, Meu nome é</h3>
-                <h1><span style="color:#1F252E;">Mariana</span> D. Moreira</h1> 
-                <p>Cloud Analyst</p>  
-                <p>Site Reability Engineer</p>
-                <div class="social">
-                    <a href="https://www.linkedin.com/in/mariana-duarte-moreira/"><i class='bx bxl-linkedin'></i></a>
-                    <a href="https://instagram.com/marianadmoreira_"><i class='bx bxl-instagram'></i></a>
-                    <a href="https://github.com/marimoreiraa"><i class='bx bxl-github'></i></a>
+    </div>
+
+    <div class="container-timeline">
+        <div class="formacao">
+            <h2>Formação</h2>
+            <div class="linha"></div>
+                <div class="item-timeline">
+                    <span class="data">2021</span>
+                    <h3>Bootcamp de Engenharia de Dados</h3>
+                    <p>SoulCode Academy</p>
                 </div>
+                <div class="item-timeline">
+                    <span class="data">2023 - Atual</span>
+                    <h3>Bacharelado em Sistemas de Informação</h3>
+                    <p>Instituto Federal de Minas Gerais (IFMG)</p>
+                </div>
+        </div>
+
+        <div class="experiencia">
+            <h2>Experiência Profissional</h2>
+            <div class="linha"></div>
+            <div class="item-timeline">
+                <span class="data">2022 - 2023</span>
+                <h3>Estagiária de Engenharia de Dados</h3>
+                <p>ilegra</p>
+            </div>
+            <div class="item-timeline">
+                <span class="data">2023 - Atual</span>
+                <h3>Analista de Infraestrutura - SRE</h3>
+                <p>Zenvia</p>
             </div>
         </div>
-    </section>
-    
-    <section class="sobre" id="sobre">
-        <h1>Sobre mim</h1>
-        <div class="descricao">
-            <div class="line"></div>
-            <p>
-                Olá! 👋 
-                Meu nome é Mariana, mas pode me chamar de Mari, e é um prazer enorme ter você aqui!
-            </p><br><br>
-            <p>  
-                Como alguém apaixonada por tecnologia e entusiasta de dados, estou em uma jornada empolgante de aprendizado e crescimento constante. 💡
-                Meu caminho profissional começou na faculdade onde tive meu primeiro contato com Programação e logo de cara me apaixonei por essa area, com isso, busquei aprofundar minhas habilidades em 
-                Python e explorei os intrincados mundos do Cloud Computing através do bootcamp de Engenharia de Dados.
-                Desde então, mergulhei de cabeça no universo de dados, trabalhando como estagiária de Engenharia de Dados, onde aprendi ainda mais sobre Programação, Cloud Computing, Devops e SRE.
-            </p><br><br>  
-            <p>
-                Hoje, atuo como Analista de Cloud, na equipe de Site Reliability Engineer (SRE), onde desafios e inovação são a essência do meu dia a dia. 
-                A paixão por resolver problemas e otimizar infraestruturas é o que me motiva a enfrentar novos desafios com entusiasmo.
-                Estou sempre em busca de novas maneiras de melhorar, aprender e crescer. 🚀🌐
-            </p>
-        </div>
-    </section>
-    <section class="hobbies" id="hobbies">
-        <h1>Meus Hobbies</h1>
-        <div class="line"></div>
-        <div class="cards">
-            <div class="hobbie-card">
-                <img src="./arquivos/books.png" alt="">
-                <h2>Ler 📚</h2>
-            </div>
-            <div class="hobbie-card">
-                <img src="./arquivos/cook.png" alt="">
-                <h2>Cozinhar 👩🏻‍🍳</h2>
-            </div>
-            <div class="hobbie-card">
-                <img src="./arquivos/travel.png" alt="">
-                <h2>Viajar ✈️</h2>
-            </div>
-            <div class="hobbie-card">
-                <img src="./arquivos/code.png" alt="">
-                <h2>Programar 👩🏻‍💻</h2>
-            </div>
-            <div class="hobbie-card">
-                <img src="./arquivos/gym.png" alt="">
-                <h2>Academia 🏋🏻‍♀️</h2>
-            </div>
-            <div class="hobbie-card">
-                <img src="./arquivos/yoga.png" alt="">
-                <h2>Yoga 🧘🏻‍♀️</h2>
-            </div>
-    </section>
+    </div>
     
     <footer>
         <p>Feito por Mariana Duarte</p>
