@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #F4DECB;
+  background-color: white;
 }
 
 .container {
@@ -11,7 +11,7 @@ body {
 
 .inicio {
   flex: 1;
-  background-color: #9461be;
+  background-color: gray;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,7 +38,7 @@ body {
 
 .infos h2 {
   font-size: 24px;
-  color: #9461be;
+  color: gray;
   margin-top: 10px;
 }
 
@@ -58,8 +58,8 @@ body {
   display: grid;
   place-items: center;
   text-decoration: none;
-  color: #9461be;
-  border: 1.6px solid #9461be;
+  color: gray;
+  border: 1.6px solid gray;
   font-size: 1.5rem;
   border-radius: 50%;
   padding: 0.39rem;
@@ -67,8 +67,8 @@ body {
 }
 
 .social a:hover {
-  color: #F4DECB;
-  background-color: #9461be;
+  color: #444;
+  background-color: gray;
 }
 
 .sobre-container {
@@ -79,6 +79,21 @@ body {
   gap: 40px;
 }
 
+.sobre p {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 90%;
+}
+
+.linha {
+  width: 60px;
+  height: 4px;
+  background-color: black;
+  margin-bottom: 20px;
+  border-radius: 2px;
+}
+
+
 .sobre, .habilidades {
   flex: 1;
   min-width: 300px;
@@ -86,22 +101,8 @@ body {
 
 .sobre h2, .habilidades h2 {
   font-size: 32px;
-  color: #9461be;
+  color: gray;
   margin-bottom: 10px;
-}
-
-.linha {
-  width: 60px;
-  height: 4px;
-  background-color: #9461be;
-  margin-bottom: 20px;
-  border-radius: 2px;
-}
-
-.sobre p {
-  font-size: 18px;
-  line-height: 1.6;
-  max-width: 90%;
 }
 
 .habilidades ul {
@@ -120,13 +121,13 @@ body {
   content: "✔";
   position: absolute;
   left: 0;
-  color: #9461be;
+  color: black;
 }
 
 .container-timeline {
   display: flex;
   flex-wrap: wrap;
-  background-color: #F4DECB;
+  background-color: gray;
   padding: 60px 80px;
   gap: 40px;
 }
@@ -138,16 +139,17 @@ body {
 
 .formacao h2, .experiencia h2 {
   font-size: 32px;
-  color: #9461be;
+  color: black;
   margin-bottom: 10px;
 }
+
 .item-timeline {
   margin-bottom: 30px;
 }
 
 .data {
   font-weight: bold;
-  color: #9461be;
+  color: black;
   font-size: 16px;
 }
 
@@ -164,8 +166,8 @@ body {
 }
 
 footer {
-  background-color: #9461be; 
-  color: #fbfbfb; 
+  background-color: #444; 
+  color: white; 
   text-align: center;
   padding: 20px;
 }
