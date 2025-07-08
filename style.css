@@ -5,23 +5,23 @@ body {
   background-color: white; /* Define a cor de fundo da página como branco */
 }
 
-/* Estilos para o contêiner principal que divide a tela em duas partes */
-.container {
+/* Estilos para o inicio que divide a tela em duas partes */
+.inicio {
   display: flex; /* Faz com que os itens dentro (.inicio e .infos) fiquem lado a lado */
   height: 100vh; /* Define a altura do contêiner para ocupar 100% da altura da tela visível */
 }
 
-/* Estilos para a seção "início" (onde fica a foto) */
-.inicio {
+/* Estilos para a seção de onde fica a foto */
+.foto {
   flex: 1; /* Permite que esta seção ocupe 1 parte do espaço disponível */
   background-color: gray; /* Define a cor de fundo desta seção como cinza */
-  display: flex; /* Faz com que o conteúdo dentro (.inicio img) seja flexível para alinhamento */
+  display: flex; /* Faz com que o conteúdo dentro (.foto img) seja flexível para alinhamento */
   align-items: center; /* Alinha o conteúdo verticalmente ao centro */
   justify-content: center; /* Alinha o conteúdo horizontalmente ao centro */
 }
 
-/* Estilos para a imagem dentro da seção "início" */
-.inicio img {
+/* Estilos para a imagem dentro da seção "foto" */
+.foto img {
   width: 300px; /* Define a largura da imagem como 300 pixels */
   height: auto; /* Ajusta a altura automaticamente para manter a proporção da imagem */
   border-radius: 8px; /* Arredonda os cantos da imagem em 8 pixels */
@@ -82,9 +82,9 @@ body {
   background-color: gray; /* Muda a cor de fundo do círculo para cinza */
 }
 
-/* Estilos para o contêiner das seções "Sobre mim" e "Habilidades" */
-.sobre-container {
-  display: flex; /* Faz com que as seções (.sobre e .habilidades) fiquem lado a lado */
+/* Estilos para a parte das seções "Sobre mim" e "Habilidades" */
+.sobre {
+  display: flex; /* Faz com que as seções (.sobre-mim e .habilidades) fiquem lado a lado */
   flex-wrap: wrap; /* Permite que as seções quebrem para a próxima linha em telas menores */
   background-color: #fff; /* Define a cor de fundo como branco */
   padding: 60px 80px; /* Adiciona espaçamento interno: 60px em cima/baixo, 80px nas laterais */
@@ -92,7 +92,7 @@ body {
 }
 
 /* Estilos para o parágrafo dentro da seção "Sobre mim" */
-.sobre p {
+.sobre-mim p {
   font-size: 18px; /* Define o tamanho da fonte como 18 pixels */
   line-height: 1.6; /* Define o espaçamento entre as linhas de texto (1.6 vezes o tamanho da fonte) */
   max-width: 90%; /* Limita a largura do parágrafo a 90% do espaço disponível */
@@ -108,13 +108,13 @@ body {
 }
 
 /* Estilos para as seções "Sobre mim" e "Habilidades" */
-.sobre, .habilidades {
+.sobre-mim, .habilidades {
   flex: 1; /* Permite que cada seção ocupe 1 parte do espaço disponível */
   min-width: 300px; /* Define uma largura mínima de 300 pixels para evitar que fiquem muito pequenas */
 }
 
 /* Estilos para os títulos h2 dentro das seções "Sobre mim" e "Habilidades" */
-.sobre h2, .habilidades h2 {
+.sobre-mim h2, .habilidades h2 {
   font-size: 32px; /* Define o tamanho da fonte como 32 pixels */
   color: gray; /* Define a cor do texto como cinza */
   margin-bottom: 10px; /* Adiciona uma margem de 10 pixels abaixo do título */
@@ -142,8 +142,8 @@ body {
   color: black; /* Define a cor do check como preto */
 }
 
-/* Estilos para o contêiner das seções "Formação" e "Experiência Profissional" */
-.container-timeline {
+/* Estilos para a parte das seções "Formação" e "Experiência Profissional" */
+.experiencias {
   display: flex; /* Faz com que as seções (.formacao e .experiencia) fiquem lado a lado */
   flex-wrap: wrap; /* Permite que as seções quebrem para a próxima linha em telas menores */
   background-color: gray; /* Define a cor de fundo como cinza */
@@ -165,7 +165,7 @@ body {
 }
 
 /* Estilos para cada item da linha do tempo (formação ou experiência) */
-.item-timeline {
+.item {
   margin-bottom: 30px; /* Adiciona uma margem de 30 pixels abaixo de cada item da linha do tempo */
 }
 
@@ -177,14 +177,14 @@ body {
 }
 
 /* Estilos para o título h3 dentro de cada item da linha do tempo */
-.item-timeline h3 {
+.item h3 {
   margin: 5px 0; /* Adiciona uma margem de 5 pixels em cima e embaixo, e 0 nas laterais */
   font-size: 20px; /* Define o tamanho da fonte como 20 pixels */
   color: #333; /* Define a cor do texto como um cinza escuro */
 }
 
 /* Estilos para o parágrafo dentro de cada item da linha do tempo */
-.item-timeline p {
+.item p {
   margin: 0; /* Remove as margens padrão do parágrafo */
   font-size: 16px; /* Define o tamanho da fonte como 16 pixels */
   color: #444; /* Define a cor do texto como um cinza um pouco mais claro */
@@ -210,9 +210,9 @@ footer p {
 /* Estes estilos só serão aplicados quando a largura da tela for no máximo 768 pixels */
 @media (max-width: 768px) {
   /* Faz com que estes contêineres se organizem em coluna (um abaixo do outro) */
-  .container,
-  .sobre-container,
-  .container-timeline {
+  .inicio,
+  .sobre,
+  .experiencias {
     flex-direction: column; /* Muda a direção dos itens flexíveis para coluna */
     padding: 40px 20px; /* Reduz o espaçamento interno para se ajustar a telas menores */
   }
@@ -230,7 +230,7 @@ footer p {
 
   /* Reduz o espaçamento interno destas seções em telas menores */
   .infos,
-  .sobre,
+  .sobre-mim,
   .habilidades,
   .formacao,
   .experiencia {
@@ -248,7 +248,7 @@ footer p {
   }
 
   /* Reduz o tamanho da fonte dos títulos h2 das outras seções em telas menores */
-  .sobre h2,
+  .sobre-mim h2,
   .habilidades h2,
   .formacao h2,
   .experiencia h2 {
@@ -256,7 +256,7 @@ footer p {
   }
 
   /* Ajusta a altura do contêiner principal para telas menores */
-  .container {
+  .inicio {
     height: auto; /* Permite que a altura se ajuste automaticamente ao conteúdo */
   }
 }
