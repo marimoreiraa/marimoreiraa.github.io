@@ -82,6 +82,50 @@ body {
   background-color: gray; /* Muda a cor de fundo do círculo para cinza */
 }
 
+/* --- Media Queries: Estilos para telas menores (smartphones e tablets) --- */
+/* Estes estilos só serão aplicados quando a largura da tela for no máximo 768 pixels */
+@media (max-width: 768px) {
+  /* Faz com que estes contêineres se organizem em coluna (um abaixo do outro) */
+  .inicio {
+    flex-direction: column; /* Muda a direção dos itens flexíveis para coluna */
+    padding: 40px 20px; /* Reduz o espaçamento interno para se ajustar a telas menores */
+  }
+
+  /* Ajusta a largura da imagem de início para telas menores */
+  .inicio img {
+    width: 100%; /* Faz a imagem ocupar 100% da largura disponível */
+    max-width: 250px; /* Limita a largura máxima da imagem a 250 pixels */
+  }
+
+  /* Muda a cor de fundo da seção de início em telas menores (do cinza para #F4DECB) */
+  .inicio{
+      background-color: #F4DECB;
+  }
+
+  /* Reduz o espaçamento interno destas seções em telas menores */
+  .infos {
+    padding: 20px 0; /* 20px em cima/baixo, 0 nas laterais */
+  }
+
+  /* Reduz o tamanho da fonte do título principal em telas menores */
+  .infos h1 {
+    font-size: 32px;
+  }
+
+  /* Reduz o tamanho da fonte do subtítulo em telas menores */
+  .infos h2 {
+    font-size: 20px;
+  }
+
+
+  /* Ajusta a altura do contêiner principal para telas menores */
+  .inicio {
+    height: auto; /* Permite que a altura se ajuste automaticamente ao conteúdo */
+  }
+}
+
+
+/* Dar Ate aqui */
 /* Estilos para a parte das seções "Sobre mim" e "Habilidades" */
 .sobre {
   display: flex; /* Faz com que as seções (.sobre-mim e .habilidades) fiquem lado a lado */
