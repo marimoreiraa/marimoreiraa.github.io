@@ -1,622 +1,306 @@
-@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto:wght@100;300;400;500;700;900&display=swap");
-
-
-* {
-  margin: 0;
-  padding: 0;
-  scroll-behavior: smooth;
-}
-
+/* Estilos gerais do corpo da página */
 body {
-  height: 100vh;
-  font-family: 'Outfit', sans-serif;
-  background: #1F252E;
-  color: #ffffff; 
+  margin: 0; /* Remove margens padrão do navegador em todo o corpo da página */
+  font-family: Arial, sans-serif; /* Define a fonte padrão para todo o texto */
+  background-color: white; /* Define a cor de fundo da página como branco */
 }
 
-.container {
-  padding: 0 8.4rem;
+/* Estilos para o inicio que divide a tela em duas partes */
+.inicio {
+  display: flex; /* Faz com que os itens dentro (.inicio e .infos) fiquem lado a lado */
+  height: 100vh; /* Define a altura do contêiner para ocupar 100% da altura da tela visível */
 }
 
-.img-w {
-  width: 100%;
-  height: auto;
+/* Estilos para a seção de onde fica a foto */
+.foto {
+  flex: 1; /* Permite que esta seção ocupe 1 parte do espaço disponível */
+  background-color: gray; /* Define a cor de fundo desta seção como cinza */
+  display: flex; /* Faz com que o conteúdo dentro (.foto img) seja flexível para alinhamento */
+  align-items: center; /* Alinha o conteúdo verticalmente ao centro */
+  justify-content: center; /* Alinha o conteúdo horizontalmente ao centro */
 }
 
-/* Navbar*/
-header {
-  box-shadow: 0 4px 17px rgb(80 80 80 / 31%);
-  background: #1F252E;
-  position: sticky;
-  top: 0;
-  z-index: 1;
+/* Estilos para a imagem dentro da seção "foto" */
+.foto img {
+  width: 300px; /* Define a largura da imagem como 300 pixels */
+  height: auto; /* Ajusta a altura automaticamente para manter a proporção da imagem */
+  border-radius: 8px; /* Arredonda os cantos da imagem em 8 pixels */
 }
 
-
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
+/* Estilos para a seção de informações pessoais */
+.infos {
+  flex: 2; /* Permite que esta seção ocupe 2 partes do espaço disponível (o dobro da seção .inicio) */
+  padding: 60px; /* Adiciona um espaçamento interno de 60 pixels em todos os lados */
+  display: flex; /* Faz com que os itens dentro sejam flexíveis */
+  flex-direction: column; /* Organiza os itens em coluna (um abaixo do outro) */
+  justify-content: center; /* Alinha o conteúdo verticalmente ao centro */
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  opacity: 0;
-  animation: leftSideAni 1s ease forwards;
+/* Estilos para o título principal (nome) dentro de .infos */
+.infos h1 {
+  font-size: 48px; /* Define o tamanho da fonte como 48 pixels */
+  margin: 0; /* Remove as margens padrão (superior e inferior) do título */
 }
 
-.logo img {
-  height: 56px;
-  width: 56px;
-  object-fit: contain;
+/* Estilos para o subtítulo (cargo) dentro de .infos */
+.infos h2 {
+  font-size: 24px; /* Define o tamanho da fonte como 24 pixels */
+  color: gray; /* Define a cor do texto como cinza */
+  margin-top: 10px; /* Adiciona uma margem de 10 pixels acima do subtítulo */
 }
 
-ul {
-  display: flex;
-  gap: .6rem;
-  list-style-type: none;
-  background-color: transparent;
-  overflow: hidden;
+/* Estilos para os parágrafos de contato dentro de .infos */
+.infos p {
+  font-size: 18px; /* Define o tamanho da fonte como 18 pixels */
+  margin: 10px 0; /* Adiciona uma margem de 10 pixels em cima e embaixo, e 0 nas laterais */
 }
 
-li a {
-  display: inline-block;
-  padding: .3rem 1rem;
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: .7px;
-  border-radius: 36px;
-  line-height: 2;
-  transition: .3s;
-  opacity: 0;
-  animation: navani .3s ease forwards;
-  animation-delay: calc(.15s * var(--navAni));
-}
-
-li a.active,
-li a:hover {
-  color: #000080;
-}
-
-#click {
-  display: none;
-}
-
-.menu {
-  display: none;
-}
-
-.mode i {
-  font-size: 1.4rem;
-  cursor: pointer;
-  color: #000080;
-  opacity: 0;
-  animation: rightSideAni 1.5s ease forwards;
-}
-
-/* Nav End */
-
-/* Section 1*/
-.main {
-  padding: 6rem 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  row-gap: 2rem;
-  column-gap: 6rem;
-  align-items: center;
-}
-
-.main h3 {
-  color: #fff;
-  font-size: 1.5rem;
-  opacity: 0;
-  animation: topSideAni 1s ease forwards;
-}
-
-.main h1 {
-  color: #fff;
-  font-size: 4rem;
-  font-weight: 600;
-  opacity: 0;
-  animation: leftSideAni 1s ease forwards;
-  animation-delay: 1s;
-}
-
+/* Estilos para o contêiner dos ícones de redes sociais */
 .social {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.4rem;
-  margin-top: 1.4rem;
+  display: flex; /* Faz com que os ícones fiquem lado a lado */
+  flex-wrap: wrap; /* Permite que os ícones quebrem para a próxima linha se não houver espaço */
+  gap: 1.4rem; /* Adiciona um espaçamento de 1.4rem entre os ícones */
+  margin-top: 1.4rem; /* Adiciona uma margem de 1.4rem acima do contêiner de redes sociais */
 }
 
+/* Estilos para cada link de rede social (o círculo do ícone) */
 .social a {
-  display: grid;
-  place-items: center;
-  text-decoration: none;
-  color: #000080;
-  border: 1.6px solid #000080;
-  font-size: 1.5rem;
-  border-radius: 50%;
-  padding: 0.39rem;
-  text-align: center;
-  opacity: 0;
-  animation: SocialAni 1s ease forwards;
-  animation-delay: calc(.2s * var(--socialAni));
+  display: grid; /* Usa grid para centralizar o ícone dentro do círculo */
+  place-items: center; /* Centraliza o ícone tanto vertical quanto horizontalmente */
+  text-decoration: none; /* Remove o sublinhado padrão dos links */
+  color: gray; /* Define a cor do ícone como cinza */
+  border: 1.6px solid gray; /* Adiciona uma borda de 1.6 pixels, sólida e cinza */
+  font-size: 1.5rem; /* Define o tamanho do ícone */
+  border-radius: 50%; /* Faz a borda ser um círculo perfeito */
+  padding: 0.39rem; /* Adiciona um espaçamento interno (acolchoamento) ao redor do ícone */
+  text-align: center; /* Centraliza o texto (se houver) */
 }
 
+/* Estilos quando o mouse passa por cima de um link de rede social */
 .social a:hover {
-  color: #000080;
-  background-color: #000080;
-  box-shadow: 0 0 20px #000080;
-  transition: all .3s ease-in-out;
+  color: #444; /* Muda a cor do ícone para um cinza mais escuro */
+  background-color: gray; /* Muda a cor de fundo do círculo para cinza */
+}
+
+/* --- Media Queries: Estilos para telas menores (smartphones e tablets) --- */
+/* Estes estilos só serão aplicados quando a largura da tela for no máximo 768 pixels */
+@media (max-width: 768px) {
+  /* Faz com que estes contêineres se organizem em coluna (um abaixo do outro) */
+  .inicio {
+    flex-direction: column; /* Muda a direção dos itens flexíveis para coluna */
+    padding: 40px 20px; /* Reduz o espaçamento interno para se ajustar a telas menores */
+  }
+
+  /* Ajusta a largura da imagem de início para telas menores */
+  .inicio img {
+    width: 100%; /* Faz a imagem ocupar 100% da largura disponível */
+    max-width: 250px; /* Limita a largura máxima da imagem a 250 pixels */
+  }
+
+  /* Muda a cor de fundo da seção de início em telas menores (do cinza para #F4DECB) */
+  .inicio{
+      background-color: #F4DECB;
+  }
+
+  /* Reduz o espaçamento interno destas seções em telas menores */
+  .infos {
+    padding: 20px 0; /* 20px em cima/baixo, 0 nas laterais */
+  }
+
+  /* Reduz o tamanho da fonte do título principal em telas menores */
+  .infos h1 {
+    font-size: 32px;
+  }
+
+  /* Reduz o tamanho da fonte do subtítulo em telas menores */
+  .infos h2 {
+    font-size: 20px;
+  }
+
+
+  /* Ajusta a altura do contêiner principal para telas menores */
+  .inicio {
+    height: auto; /* Permite que a altura se ajuste automaticamente ao conteúdo */
+  }
 }
 
 
-.images {
-  border-radius: 10px;
-  width: 450px;
-}
-.images {
-  background: linear-gradient(145deg, #1f252e, #2e3239);
-  box-shadow: 10px 10px 19px #1c1e22, -10px -10px 19px #1b1f27;
-  border-top: 2px solid #000080;
-  border-bottom-left-radius: 60px;
-  border-bottom-right-radius: 60px;
-  margin: auto;
-  overflow: hidden;
-}
-/* Section 1 End */
-
-/*Section 2 */
-.about {
-  min-height: 50vh;
-  width: 100vw;
-  padding: 100px;
-  margin-bottom: 20px;
+/* Dar Ate aqui */
+/* Estilos para a parte das seções "Sobre mim" e "Habilidades" */
+.sobre {
+  display: flex; /* Faz com que as seções (.sobre-mim e .habilidades) fiquem lado a lado */
+  flex-wrap: wrap; /* Permite que as seções quebrem para a próxima linha em telas menores */
+  background-color: #fff; /* Define a cor de fundo como branco */
+  padding: 60px 80px; /* Adiciona espaçamento interno: 60px em cima/baixo, 80px nas laterais */
+  gap: 40px; /* Adiciona um espaçamento de 40 pixels entre as seções */
 }
 
-.about h1 {
-  font-size: 56px;
-  font-weight: 700;
-  color: #fbfbfb;
-  font-family: "Libre Baskerville", serif;
+/* Estilos para o parágrafo dentro da seção "Sobre mim" */
+.sobre-mim p {
+  font-size: 18px; /* Define o tamanho da fonte como 18 pixels */
+  line-height: 1.6; /* Define o espaçamento entre as linhas de texto (1.6 vezes o tamanho da fonte) */
+  max-width: 90%; /* Limita a largura do parágrafo a 90% do espaço disponível */
 }
 
-.about .description {
-  display: flex;
-  align-items: start;
-  flex-direction: column;
-  padding: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+/* Estilos para a linha divisória abaixo dos títulos das seções */
+.linha {
+  width: 60px; /* Define a largura da linha como 60 pixels */
+  height: 4px; /* Define a altura da linha como 4 pixels */
+  background-color: black; /* Define a cor de fundo da linha como preto */
+  margin-bottom: 20px; /* Adiciona uma margem de 20 pixels abaixo da linha */
+  border-radius: 2px; /* Arredonda levemente os cantos da linha */
 }
 
-.about .description .line {
-  height: 2.5px;
-  width: 400px;
-  background-color: #000080;
-  margin-bottom: 20px;
+/* Estilos para as seções "Sobre mim" e "Habilidades" */
+.sobre-mim, .habilidades {
+  flex: 1; /* Permite que cada seção ocupe 1 parte do espaço disponível */
+  min-width: 300px; /* Define uma largura mínima de 300 pixels para evitar que fiquem muito pequenas */
 }
 
-.about .description p {
-  color: #fbfbfb;
-  font-size: 20px;
-
+/* Estilos para os títulos h2 dentro das seções "Sobre mim" e "Habilidades" */
+.sobre-mim h2, .habilidades h2 {
+  font-size: 32px; /* Define o tamanho da fonte como 32 pixels */
+  color: gray; /* Define a cor do texto como cinza */
+  margin-bottom: 10px; /* Adiciona uma margem de 10 pixels abaixo do título */
 }
 
-.about .description p span {
-  color: #000080;
+/* Estilos para a lista de habilidades */
+.habilidades ul {
+  list-style: none; /* Remove os marcadores de lista padrão (as bolinhas) */
+  padding-left: 0; /* Remove o preenchimento esquerdo padrão da lista */
 }
 
-
-/* Section 2 End */
-
-/* Section 3 Start */
-.skills {
-  /* Remova o display: flex; e outros estilos relacionados */
-  text-align: center; /* Centralizar o conteúdo */
-  padding: 50px 100px;
+/* Estilos para cada item da lista de habilidades */
+.habilidades li {
+  font-size: 18px; /* Define o tamanho da fonte como 18 pixels */
+  margin-bottom: 12px; /* Adiciona uma margem de 12 pixels abaixo de cada item */
+  padding-left: 20px; /* Adiciona um preenchimento esquerdo para o texto (para dar espaço ao check) */
+  position: relative; /* Define a posição relativa para que o pseudo-elemento "::before" possa ser posicionado dentro dele */
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 50px;
+/* Estilos para o marcador de check (✔) antes de cada item de habilidade */
+.habilidades li::before {
+  content: "✔"; /* Insere o caractere de check (✔) antes do texto */
+  position: absolute; /* Posiciona o check de forma absoluta em relação ao seu pai (.habilidades li) */
+  left: 0; /* Alinha o check na borda esquerda do item */
+  color: black; /* Define a cor do check como preto */
 }
 
-.skills h1 {
-  font-size: 56px;
-  font-weight: 700;
-  color: #fbfbfb;
-  font-family: "Libre Baskerville", serif;
+/* Estilos para a parte das seções "Formação" e "Experiência Profissional" */
+.experiencias {
+  display: flex; /* Faz com que as seções (.formacao e .experiencia) fiquem lado a lado */
+  flex-wrap: wrap; /* Permite que as seções quebrem para a próxima linha em telas menores */
+  background-color: gray; /* Define a cor de fundo como cinza */
+  padding: 60px 80px; /* Adiciona espaçamento interno: 60px em cima/baixo, 80px nas laterais */
+  gap: 40px; /* Adiciona um espaçamento de 40 pixels entre as seções */
 }
 
-.skill-card {
-  height: 200px; /* Ajuste conforme necessário */
-  background-color: #3d3e42;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
-  transition: all ease 0.5s;
+/* Estilos para as seções "Formação" e "Experiência Profissional" */
+.formacao, .experiencia {
+  flex: 1; /* Permite que cada seção ocupe 1 parte do espaço disponível */
+  min-width: 300px; /* Define uma largura mínima de 300 pixels */
 }
 
-.skill-card:hover {
-  background-color: #000080;
+/* Estilos para os títulos h2 dentro das seções de formação e experiência */
+.formacao h2, .experiencia h2 {
+  font-size: 32px; /* Define o tamanho da fonte como 32 pixels */
+  color: black; /* Define a cor do texto como preto */
+  margin-bottom: 10px; /* Adiciona uma margem de 10 pixels abaixo do título */
 }
 
-.skill-card img {
-  height: 80px; /* Ajuste conforme necessário */
-  width: 80px; /* Ajuste conforme necessário */
-  object-fit: contain;
+/* Estilos para cada item da linha do tempo (formação ou experiência) */
+.item {
+  margin-bottom: 30px; /* Adiciona uma margem de 30 pixels abaixo de cada item da linha do tempo */
 }
 
-.skill-card h2 {
-  font-size: 18px;
-  font-weight: 400;
-  color: #fbfbfb;
+/* Estilos para a data dentro de cada item da linha do tempo */
+.data {
+  font-weight: bold; /* Deixa o texto em negrito */
+  color: black; /* Define a cor do texto como preto */
+  font-size: 16px; /* Define o tamanho da fonte como 16 pixels */
 }
 
-
-.portfolio {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 50px 100px;
+/* Estilos para o título h3 dentro de cada item da linha do tempo */
+.item h3 {
+  margin: 5px 0; /* Adiciona uma margem de 5 pixels em cima e embaixo, e 0 nas laterais */
+  font-size: 20px; /* Define o tamanho da fonte como 20 pixels */
+  color: #333; /* Define a cor do texto como um cinza escuro */
 }
 
-.portfolio h1 {
-  font-size: 56px;
-  font-weight: 700;
-  color: #fbfbfb;
-  font-family: "Libre Baskerville", serif;
+/* Estilos para o parágrafo dentro de cada item da linha do tempo */
+.item p {
+  margin: 0; /* Remove as margens padrão do parágrafo */
+  font-size: 16px; /* Define o tamanho da fonte como 16 pixels */
+  color: #444; /* Define a cor do texto como um cinza um pouco mais claro */
 }
 
-.portfolio-cards {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  margin-top: 50px;
-  gap: 20px;
-}
-
-.portfolio-card {
-  position: relative;
-  height: 30vw;
-  width: 30vw;
-  background-color: #3d3e42;
-  border-radius: 20px;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
-  gap: 2.5vh;
-  transition: all ease 0.5s;
-}
-
-.portfolio-card img {
-  position: relative;
-  height: 30vw;
-  width: 30vw;
-  object-fit: cover;
-}
-
-.portfolio-card .overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  gap: 2.5vh;
-  height: 30vw;
-  width: 30vw;
-  background-color: #1F252Ea2;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  opacity: 0;
-  transition: all ease 0.5s;
-
-
-
-}
-
-.portfolio-card .overlay h3 {
-  color: #fbfbfb;
-  font-size: 14px;
-}
-
-.portfolio-card .overlay p {
-  color: #fbfbfb;
-  font-size: 14px;
-  text-align: center;
-}
-
-.portfolio-card .overlay button {
-  height: 36px;
-  width: 108px;
-  background-color: #000080;
-  border: 1px solid #000080;
-  border-radius: 8px;
-  color: #fbfbfb;
-  font-size: 12px;
-  transition: all ease 0.5s;
-  cursor: pointer;
-}
-
-.portfolio-card .overlay:hover {
-  opacity: 1;
-}
-
-.portfolio button {
-  margin-top: 50px;
-  height: 48px;
-  width: 144px;
-  background-color: #000080;
-  border: 1px solid #000080;
-  border-radius: 8px;
-  color: #1F252E;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all ease 0.5s;
-}
-
-.portfolio button:hover {
-  background-color: #000080;
-}
-
-.timeline-section{
-min-height: 100vh;
-padding: 100px 15px;
-}
-
-.timeline-section h1 {
-  font-size: 56px;
-  font-weight: 700;
-  color: #fbfbfb;
-  font-family: "Libre Baskerville", serif;
-  margin-left: 20px;
-}
-.timeline-items{
-max-width: 1000px;
-margin:auto;
-display: flex;
-flex-wrap: wrap;
-position: relative;
-}
-.timeline-items::before{
-content: '';
-position: absolute;
-width: 2px;
-height: 100%;
-background-color: #2f363e;
-left: calc(50% - 1px);
-}
-.timeline-item{
-margin-bottom: 40px;
-width: 100%;
-position: relative;
-}
-.timeline-item:last-child{
-margin-bottom: 0;
-}
-.timeline-item:nth-child(odd){
-  padding-right: calc(50% + 30px);
-text-align: right;
-}
-.timeline-item:nth-child(even){
-  padding-left: calc(50% + 30px);
-}
-.timeline-dot{
-height: 16px;
-width: 16px;
-background-color: #000080;
-position: absolute;
-left: calc(50% - 8px);
-border-radius: 50%;
-top:10px;
-}
-.timeline-date{
-font-size: 18px;
-color: #000080;
-margin:6px 0 15px;
-}
-.timeline-content{
-  background-color: #2f363e;
-padding: 30px;
-border-radius: 5px;
-}
-.timeline-content h3{
-  font-size: 20px;
-color: #000080;
-margin:0 0 10px;
-text-transform: capitalize;
-font-weight: 500;
-}
-.timeline-content p{
-  color: #c8c8c8;
-font-size: 16px;
-font-weight: 300;
-line-height: 22px;
-}
-
+/* Estilos para o rodapé da página */
 footer {
-  background-color: #000080; /* Cor de fundo azul */
-  color: #fbfbfb; /* Cor do texto branco */
-  text-align: center;
-  padding: 20px;
+  background-color: #444; /* Define a cor de fundo do rodapé como um cinza escuro */
+  color: white; /* Define a cor do texto do rodapé como branco */
+  text-align: center; /* Centraliza o texto no rodapé */
+  padding: 20px; /* Adiciona um espaçamento interno de 20 pixels em todos os lados */
 }
 
+/* Estilos para o parágrafo dentro do rodapé */
 footer p {
-  margin: 0; /* Remove a margem padrão do parágrafo */
-  font-family: "Libre Baskerville", serif;
-  font-size: 16px;
-  font-weight: 500;
+  margin: 0; /* Remove as margens padrão do parágrafo */
+  font-family: "Libre Baskerville", serif; /* Define a fonte do texto do rodapé */
+  font-size: 16px; /* Define o tamanho da fonte como 16 pixels */
+  font-weight: 500; /* Define a espessura da fonte como 500 (um pouco mais grossa que o normal) */
 }
 
-
-/* Animation */
-@keyframes leftSideAni {
-  0% {
-      transform: translateX(-100px);
-      opacity: 0;
+/* --- Media Queries: Estilos para telas menores (smartphones e tablets) --- */
+/* Estes estilos só serão aplicados quando a largura da tela for no máximo 768 pixels */
+@media (max-width: 768px) {
+  /* Faz com que estes contêineres se organizem em coluna (um abaixo do outro) */
+  .inicio,
+  .sobre,
+  .experiencias {
+    flex-direction: column; /* Muda a direção dos itens flexíveis para coluna */
+    padding: 40px 20px; /* Reduz o espaçamento interno para se ajustar a telas menores */
   }
 
-  100% {
-      transform: translateX(0);
-      opacity: 1;
-  }
-}
-
-@keyframes navani {
-  0% {
-      transform: translateY(100px);
-      opacity: 0;
+  /* Ajusta a largura da imagem de início para telas menores */
+  .inicio img {
+    width: 100%; /* Faz a imagem ocupar 100% da largura disponível */
+    max-width: 250px; /* Limita a largura máxima da imagem a 250 pixels */
   }
 
-  100% {
-      transform: translateY(0);
-      opacity: 1;
-  }
-}
-
-@keyframes rightSideAni {
-  0% {
-      transform: translateX(100px);
-      opacity: 0;
+  /* Muda a cor de fundo da seção de início em telas menores (do cinza para #F4DECB) */
+  .inicio{
+      background-color: #F4DECB;
   }
 
-  100% {
-      transform: translateX(0);
-      opacity: 1;
-  }
-}
-
-@keyframes topSideAni {
-  0% {
-      transform: translateY(-100px);
-      opacity: 0;
+  /* Reduz o espaçamento interno destas seções em telas menores */
+  .infos,
+  .sobre-mim,
+  .habilidades,
+  .formacao,
+  .experiencia {
+    padding: 20px 0; /* 20px em cima/baixo, 0 nas laterais */
   }
 
-  100% {
-      transform: translateY(0);
-      opacity: 1;
-  }
-}
-
-@keyframes SocialAni {
-  0% {
-      transform: translateY(100px);
-      opacity: 0;
+  /* Reduz o tamanho da fonte do título principal em telas menores */
+  .infos h1 {
+    font-size: 32px;
   }
 
-  100% {
-      transform: translateY(0);
-      opacity: 1;
-  }
-}
-@keyframes imageAni {
-  0% {
-      opacity: 0;
-      transform: scale(0);
+  /* Reduz o tamanho da fonte do subtítulo em telas menores */
+  .infos h2 {
+    font-size: 20px;
   }
 
-  100% {
-      opacity: 1;
-      transform: scale(1);
-  }
-}
-
-
-@media screen and (max-width: 1024px) {
-  .container {
-      padding: 0 4.4rem;
+  /* Reduz o tamanho da fonte dos títulos h2 das outras seções em telas menores */
+  .sobre-mim h2,
+  .habilidades h2,
+  .formacao h2,
+  .experiencia h2 {
+    font-size: 28px;
   }
 
-  .main h3 {
-      color: #fff;
-      margin-top: 1rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .container {
-      padding: 0 1.6rem;
-  }
-
-  .portfolio-cards {
-      grid-template-columns: 1fr; 
-  }
-
-  .portfolio-card .overleaf h3,
-  .portfolio-card .overlay p{
-      display: none;
-  }
- .timeline-items::before{
-  left: 7px;
-}
-.timeline-item:nth-child(odd){
-  padding-right: 0;
-  text-align: left;
-}
-.timeline-item:nth-child(odd),
-.timeline-item:nth-child(even){
-  padding-left: 37px;
-}
-.timeline-dot{
-  left:0;
-}
-}
-
-@media screen and (max-width:600px) {
-  body {
-      height: auto;
-  }
-
-  header {
-      height: auto;
-  }
-
-  ul {
-      background: #1F252E;
-      width: 100%;
-      height: 100vh;
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-      top: 3.4rem;
-      left: -100%;
-      z-index: 111111;
-  }
-
-  .menu {
-      display: block;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #000080;
-  }
-
-  #click:checked~ul {
-      left: 0%;
-      transition: all 0.3s ease;
-  }
-  .images {
-      width: 100%;
-      margin: auto;
-  }
-
-  .main {
-      margin-top: 2rem;
+  /* Ajusta a altura do contêiner principal para telas menores */
+  .inicio {
+    height: auto; /* Permite que a altura se ajuste automaticamente ao conteúdo */
   }
 }
