@@ -1,0 +1,233 @@
+/* =====================================================
+   DESIGN SYSTEM — compartilhado por todas as telas
+   ===================================================== */
+
+/* ---------- RESET ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---------- TOKENS PADRÃO (tamanho MÉDIO) ---------- */
+:root {
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Escala tipográfica — sobrescritos pelas classes de fonte */
+  --text-ui:     1.05rem;   /* labels, info geral           */
+  --text-btn:    1.25rem;   /* texto dos botões             */
+  --text-card:   1.1rem;    /* label dentro dos cards       */
+  --text-bubble: 0.92rem;   /* balão de fala                */
+  --text-stars:  2.1rem;    /* estrelas                     */
+
+  /* Raios */
+  --r-sm:  0.75rem;
+  --r-md:  1.25rem;
+  --r-lg:  1.75rem;
+  --r-pill:9999px;
+
+  /* Sombras */
+  --shadow-card: 0 8px 0 rgba(0,0,0,0.12), 0 10px 25px rgba(0,0,0,0.10);
+  --shadow-btn:  0 5px 18px rgba(0,0,0,0.18);
+
+  /* Transições */
+  --t-fast: 0.15s ease;
+  --t-med:  0.25s ease;
+}
+
+/* ---------- ESCALA PEQUENA ---------- */
+body.font-small {
+  --text-ui:     0.9rem;
+  --text-btn:    1.05rem;
+  --text-card:   0.9rem;
+  --text-bubble: 0.8rem;
+  --text-stars:  1.8rem;
+}
+
+/* ---------- ESCALA GRANDE ---------- */
+body.font-large {
+  --text-ui:     1.25rem;
+  --text-btn:    1.5rem;
+  --text-card:   1.3rem;
+  --text-bubble: 1.05rem;
+  --text-stars:  2.6rem;
+}
+
+/* ---------- BASE ---------- */
+body {
+  font-family: var(--font);
+  font-size: var(--text-ui);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================
+   MODO SIMPLE 
+   ========================================= */
+
+.simple-mode .char-area {
+  display: none;
+}
+
+.simple-mode .ds-bubble {
+  display: none;
+}
+
+.simple-mode .feedback-gif {
+  display: none;
+}
+
+.simple-mode .act-card {
+  transition: none !important;
+  animation: none !important;
+}
+
+.simple-mode .act-card:hover {
+  transform: none;
+}
+
+.simple-mode .ds-stars {
+  opacity: 0.6;
+}
+
+/* ---------- CARD BRANCO ---------- */
+.ds-card {
+  background: #fff;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem;
+}
+
+/* ---------- BOTÃO PILL ---------- */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  height: 4rem;
+  padding: 0 2.25rem;
+  border-radius: var(--r-pill);
+  border: none;
+  font-family: var(--font);
+  font-size: var(--text-btn);   /* ← escala com a preferência */
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: var(--shadow-btn);
+  transition: transform var(--t-fast), opacity var(--t-fast);
+  white-space: nowrap;
+}
+.ds-btn:hover  { opacity: 0.91; }
+.ds-btn:active { transform: scale(0.96); }
+
+/* ---------- HIDDEN ---------- */
+.ds-hidden { visibility: hidden; pointer-events: none; opacity: 0; }
+
+/* ---------- ANIMAÇÕES ---------- */
+@keyframes ds-popIn {
+  from { opacity: 0; transform: scale(0.72); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes ds-fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ds-float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+@keyframes ds-bounce {
+  0%,100% { transform: translateY(0) scale(1); }
+  30%      { transform: translateY(-18px) scale(1.04); }
+  60%      { transform: translateY(-8px) scale(1); }
+}
+@keyframes ds-shake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-10px); }
+  40%      { transform: translateX(10px); }
+  60%      { transform: translateX(-7px); }
+  80%      { transform: translateX(7px); }
+}
+@keyframes ds-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  50%      { box-shadow: 0 0 0 10px rgba(255,255,255,0.25); }
+}
+@keyframes ds-waveBar {
+  0%,100% { transform: scaleY(0.35); opacity: 0.45; }
+  50%      { transform: scaleY(1);    opacity: 1;    }
+}
+@keyframes ds-starPop {
+  from { transform: scale(0.3) rotate(-30deg); }
+  to   { transform: scale(1)   rotate(0deg); }
+}
+@keyframes ds-cardCorrect {
+  0%,100% { transform: scale(1); }
+  40%      { transform: scale(1.09); }
+  70%      { transform: scale(0.97); }
+}
+
+/* ---------- BARRAS DE ÁUDIO ---------- */
+.ds-waves {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 36px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.ds-waves.active { opacity: 1; }
+.ds-waves span {
+  display: block;
+  width: 7px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.8);
+  animation: ds-waveBar 0.9s ease-in-out infinite;
+}
+.ds-waves span:nth-child(1){ height:14px; animation-delay:0s;    }
+.ds-waves span:nth-child(2){ height:26px; animation-delay:0.15s; }
+.ds-waves span:nth-child(3){ height:36px; animation-delay:0.30s; }
+.ds-waves span:nth-child(4){ height:26px; animation-delay:0.45s; }
+.ds-waves span:nth-child(5){ height:14px; animation-delay:0.60s; }
+
+/* ---------- BALÃO DE FALA ---------- */
+.ds-bubble {
+  position: relative;
+  background: #fff;
+  border-radius: var(--r-md);
+  padding: 0.7rem 1rem;
+  font-size: var(--text-bubble);   /* ← escala */
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.5;
+  box-shadow: var(--shadow-card);
+  border: 2px solid rgba(0,0,0,0.08);
+  max-width: 240px;
+  text-align: center;
+  animation: ds-popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.ds-bubble-tail-bl::after {
+  content: '';
+  position: absolute;
+  bottom: -13px;
+  left: 22px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 13px solid #e05fa0;
+}
+
+/* ---------- ESTRELAS ---------- */
+.ds-stars {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  font-size: var(--text-stars);   /* ← escala */
+  line-height: 1;
+}
+.ds-star { color: #d1d5db; transition: color 0.25s, transform 0.25s; }
+.ds-star.earned {
+  color: #facc15;
+  animation: ds-starPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }

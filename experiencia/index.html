@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiência | Dashboard Pessoal</title>
+  <link rel="icon" type="image/png" href="../assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <button class="mobile-nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="../">
+        <img src="../assets/icone-mari.png" alt="Logo do site">
+        <div>
+          <strong>Mari D. Moreira</strong>
+          <small>Site Pessoal</small>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="Navegacao principal">
+        <a data-route="home" href="../"><i class="fa-solid fa-house"></i> Home</a>
+        <a data-route="espacoPessoal" href="../espaco-pessoal/"><i class="fa-solid fa-shield"></i> Espaço Pessoal</a>
+        <a data-route="sobre" href="../sobre/"><i class="fa-solid fa-user"></i> Sobre Mim</a>
+        <a data-route="projetos" href="../projetos/"><i class="fa-solid fa-diagram-project"></i> Projetos</a>
+        <a class="active" data-route="experiencia" href="../experiencia/"><i class="fa-solid fa-briefcase"></i> Experiência</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="page-hero reveal">
+        <span class="pill">Trajetória</span>
+        <h1>Experiência Profissional</h1>
+        <p>Linha do tempo com os principais marcos da minha jornada em tecnologia.</p>
+      </header>
+
+      <section class="timeline-section" id="exp-loc" aria-label="Timeline de experiência profissional">
+        <div class="timeline-items">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2026</div>
+            <div class="timeline-content">
+              <h2>DevOps Analyst II</h2>
+              <h3>Grupo Boticário</h3>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2025 - 2026</div>
+            <div class="timeline-content">
+              <h2>SRE Pleno</h2>
+              <h3>ZENVIA</h3>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2024 - 2025</div>
+            <div class="timeline-content">
+              <h2>SRE Jr.</h2>
+              <h3>ZENVIA</h3>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2023</div>
+            <div class="timeline-content">
+              <h2>Cloud Analyst | Site Reliability Engineering</h2>
+              <h3>ilegra</h3>
+              <p>Trabalhando como SRE, coloquei em prática tudo que aprendi em minhas experiências anteriores, além de aprender tecnologias e funcionalidades novas e me desafiar todos os dias.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2022</div>
+            <div class="timeline-content">
+              <h2>Data Engineer Internship</h2>
+              <h3>ilegra</h3>
+              <p>Trilhas em Core Engineering e DevOps and Cloud Basics, com foco em Java, POO, bancos de dados, AWS, GCP e evolução de soluções com práticas DevOps.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2021</div>
+            <div class="timeline-content">
+              <h2>Data Engineer Bootcamp</h2>
+              <h3>SoulCode Academy</h3>
+              <p>Formação intensiva em Python, Pandas, SQL, BigQuery, PySpark e SparkSQL para construção e análise de pipelines de dados.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2020</div>
+            <div class="timeline-content">
+              <h2>Diretora Comercial</h2>
+              <h3>Tristate - Empresa Júnior</h3>
+              <p>Liderança comercial com foco em relacionamento com clientes, atração de leads e desenvolvimento de soluções para diferentes negócios.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2019</div>
+            <div class="timeline-content">
+              <h2>Assessora de Negócios</h2>
+              <h3>Tristate - Empresa Júnior</h3>
+              <p>Atuação no atendimento comercial e participação em projetos como sites e softwares de controle de estoque e fluxo de caixa.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

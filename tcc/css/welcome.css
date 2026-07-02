@@ -1,0 +1,65 @@
+@import url('ds.css');
+
+/* =====================================================
+   TELA DE BOAS-VINDAS
+   ===================================================== */
+
+body { overflow: hidden; }
+
+.welcome-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background-color: #FFB6D9;
+  transition: background-color 0.4s;
+  position: relative;
+  padding: 2rem;
+}
+
+/* ---- PERSONAGEM ---- */
+.character-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: ds-bounce 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 14px 28px rgba(0,0,0,0.16));
+  transition: transform var(--t-fast);
+}
+.character-wrapper:active { transform: scale(0.94); }
+.character-wrapper.speaking { animation: ds-bounce 2.8s ease-in-out infinite, ds-pulse 0.6s ease-in-out infinite; }
+
+.character-img {
+  width: clamp(200px, 36vw, 380px);
+  height: clamp(200px, 36vw, 380px);
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  display: block;
+}
+.character-emoji {
+  font-size: clamp(8rem, 20vw, 14rem);
+  line-height: 1;
+  user-select: none;
+}
+
+/* ---- ONDAS ---- */
+.ds-waves { margin: 0 auto; }
+
+/* ---- BOTÃO ---- */
+.start-block { animation: ds-fadeUp 0.5s ease both; }
+.start-block.ds-hidden { visibility: hidden; pointer-events: none; opacity: 0; }
+
+.btn-start {
+  width: clamp(260px, 40vw, 360px);
+  height: 5rem;
+  font-size: var(--text-btn);
+}
+
+/* RESPONSIVO */
+@media (max-width: 480px) {
+  .btn-start { height: 4.25rem; font-size: var(--text-md); width: 90vw; }
+}
