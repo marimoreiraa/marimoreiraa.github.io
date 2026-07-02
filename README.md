@@ -25,17 +25,6 @@ Sistema pessoal em HTML, CSS e JavaScript puro, pronto para deploy no GitHub Pag
 1. Abra o arquivo `index.html` no navegador.
 2. Ou use uma extensao como Live Server no VS Code para navegar entre rotas por pasta.
 
-## Deploy no GitHub Pages
-
-1. Suba os arquivos para o repositorio.
-2. Em Settings > Pages, configure a branch principal e a pasta root (`/`).
-3. Acesse a URL gerada pelo GitHub Pages.
-
-## Login do Espaco Pessoal
-
-- Usuario: `admin`
-- Senha: `1234`
-
 ## Persistencia
 
 Os dados ficam no `localStorage` do navegador:
