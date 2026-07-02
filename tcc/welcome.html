@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bem-vindo!</title>
+  <link rel="stylesheet" href="css/welcome.css" />
+</head>
+<body>
+<div class="welcome-page" id="welcomePage">
+ 
+  <!-- Personagem -->
+  <div class="character-wrapper" id="characterWrapper" role="button" aria-label="Toque para repetir">
+    <span class="character-emoji" role="img" aria-label="Personagem">🌎</span>
+  </div>
+ 
+  <!-- Ondas de áudio -->
+  <div class="ds-waves" id="audioWaves" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+ 
+  <!-- Botão Iniciar (aparece ao fim do áudio) -->
+  <div class="start-block ds-hidden" id="startBlock">
+    <button class="ds-btn btn-start" id="btnStart" onclick="iniciar()" aria-label="Iniciar aprendizado">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5" width="28" height="28" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke-opacity="0.5"/>
+        <polygon points="10,8 17,12 10,16" fill="currentColor" stroke="none"/>
+      </svg>
+      Iniciar
+    </button>
+  </div>
+ 
+</div>
+<script src="js/temas.js"></script>
+<script src="js/fontes.js"></script>
+<script src="js/welcome.js"></script>
+</body>
+</html>

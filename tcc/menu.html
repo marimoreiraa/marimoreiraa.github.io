@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Escolha o Modo</title>
+  <link rel="stylesheet" href="css/ds.css"/>
+  <link rel="stylesheet" href="css/menu.css"/>
+</head>
+<body>
+
+<div class="menu-page" id="menuPage">
+
+  <h1 class="menu-title" id="menuTitle">Como vamos aprender hoje?</h1>
+
+  <!-- Botão: Modo com Personagem -->
+  <button class="menu-card" id="btnEnhanced" onclick="selecionarModo('enhanced')"
+          aria-label="Modo com Personagem">
+    <span class="menu-card__icon">🌟</span>
+    <span class="menu-card__label">Com Personagem</span>
+    <span class="menu-card__desc">Com seu amigo favorito</span>
+  </button>
+
+  <!-- Botão: Modo Simples -->
+  <button class="menu-card" id="btnSimple" onclick="selecionarModo('simple')"
+          aria-label="Modo Simples">
+    <span class="menu-card__icon">📖</span>
+    <span class="menu-card__label">Modo Simples</span>
+    <span class="menu-card__desc">Letras, palavras e imagens</span>
+  </button>
+
+</div>
+
+<script src="js/temas.js"></script>
+<script src="js/fontes.js"></script>
+<script src="js/menu.js"></script>
+</body>
+</html>

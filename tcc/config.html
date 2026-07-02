@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuração do Perfil</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.4.1/tailwind.min.js"></script>
+  <link rel="stylesheet" href="css/config.css" />
+</head>
+<body>
+  <div style="min-height:100vh; background: linear-gradient(135deg,#eff6ff,#f5f3ff); display:flex; flex-direction:column;">
+    <div style="flex:1; background:white; display:flex; flex-direction:column;">
+
+      <!-- Header -->
+      <div class="header" style="padding: 1.5rem 2rem 1.25rem;">
+        <h1 style="font-size:1.75rem; font-weight:700; color:white; margin:0 0 0.25rem;">Configuração do Perfil</h1>
+        <p style="color:rgba(255,255,255,0.9); margin:0; font-size:0.95rem;">Configure a experiência personalizada para o aprendizado</p>
+      </div>
+
+      <!-- Main content -->
+      <div style="flex:1; overflow-y:auto;">
+        <div class="page-layout">
+
+          <!-- LEFT COLUMN -->
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+
+            <!-- Informações Básicas -->
+            <div class="card">
+              <div class="section-title">Informações Básicas</div>
+              <div style="display:flex; flex-direction:column; gap:1rem;">
+                <div>
+                  <label class="input-label" for="nome">Nome</label>
+                  <input class="input-field" id="nome" type="text" placeholder="Digite o nome"
+                    oninput="updatePreview()" />
+                </div>
+                <div>
+                  <label class="input-label" for="idade">Idade</label>
+                  <input class="input-field" id="idade" type="number" placeholder="Digite a idade" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Tema / Hiperfoco -->
+            <div class="card">
+              <div class="section-title">Do que o usuário mais gosta?</div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;" id="temas">
+                <button class="theme-btn active" data-tema="dora" onclick="selectTema(this)">
+                <img src="public/imagens/dora.png" alt="Dora" class="theme-icon" style="width: 24px; height: 24px; display: inline-block; vertical-align: middle; margin-right: 0.5rem; object-fit: contain;" />Dora Aventureira
+                </button>
+                <button class="theme-btn" data-tema="mickey" onclick="selectTema(this)">
+                  <img src="public/imagens/mickey.png" alt="Mickey" class="theme-icon" style="width: 24px; height: 24px; display: inline-block; vertical-align: middle; margin-right: 0.5rem; object-fit: contain;" />Mickey
+                </button>
+                <button class="theme-btn" data-tema="princesas" onclick="selectTema(this)">
+                  <img src="public/imagens/princesas.png" alt="Princesas" class="theme-icon" style="width: 24px; height: 24px; display: inline-block; vertical-align: middle; margin-right: 0.5rem; object-fit: contain;" />Princesas
+                </button>
+                <button class="theme-btn" data-tema="dinossauros" onclick="selectTema(this)">
+                  <img src="public/imagens/dino.png" alt="Dinossauros" class="theme-icon" style="width: 24px; height: 24px; display: inline-block; vertical-align: middle; margin-right: 0.5rem; object-fit: contain;" />Dinossauros
+                </button>
+                <button class="theme-btn" data-tema="sitio" onclick="selectTema(this)">
+                  <img src="public/imagens/emilia.png" alt="Sítio do Pica-Pau" class="theme-icon" style="width: 24px; height: 24px; display: inline-block; vertical-align: middle; margin-right: 0.5rem; object-fit: contain;" />Sítio do Pica-Pau
+                </button>
+                <button class="theme-btn" data-tema="customizar" onclick="selectTema(this)">
+                  <img src="public/imagens/custom.png" alt="Customizar" class="theme-icon" style="width: 24px; height: 24px; display: inline-block; vertical-align: middle; margin-right: 0.5rem; object-fit: contain;" />Customizar
+                </button>
+              </div>
+            </div>
+
+            <!-- Preferências Visuais -->
+            <div class="card">
+              <div class="section-title">Preferências Visuais</div>
+
+              <!-- Cor favorita -->
+              <div style="margin-bottom:1rem;">
+                <label class="input-label">Cor de fundo (para melhor foco, use cores claras)</label>
+                <div id="cores" style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+
+                  <button class="color-btn active" data-cor="neutro" style="background:#F8FAFC;" onclick="selectCor(this)"></button>
+
+                  <button class="color-btn" data-cor="offwhite" style="background:#FFFFFF;" onclick="selectCor(this)"></button>
+
+                  <button class="color-btn" data-cor="cinzaClaro" style="background:#EEF2F7;" onclick="selectCor(this)"></button>
+
+                  <button class="color-btn" data-cor="rosaSuave" style="background:#FCE7F3;" onclick="selectCor(this)"></button>
+
+                  <button class="color-btn" data-cor="azulSuave" style="background:#E0F2FE;" onclick="selectCor(this)"></button>
+
+                  <button class="color-btn" data-cor="verdeSuave" style="background:#E8F5E9;" onclick="selectCor(this)"></button>
+
+                  <button class="color-btn" data-cor="amareloSuave" style="background:#FEF9C3;" onclick="selectCor(this)"></button>
+
+                  <button class="color-btn" data-cor="lilasSuave" style="background:#F3E8FF;" onclick="selectCor(this)"></button>
+
+                </div>
+              </div>
+
+              <!-- Tamanho da fonte -->
+              <div>
+                <label class="input-label">Tamanho da fonte</label>
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.5rem;" id="fontes">
+                  <button class="font-btn" data-size="text-base" onclick="selectFonte(this)">
+                    <span style="font-size:1rem;">A</span>
+                    <span class="font-label">Pequeno</span>
+                  </button>
+                  <button class="font-btn active" data-size="text-xl" onclick="selectFonte(this)">
+                    <span style="font-size:1.25rem;">A</span>
+                    <span class="font-label">Médio</span>
+                  </button>
+                  <button class="font-btn" data-size="text-2xl" onclick="selectFonte(this)">
+                    <span style="font-size:1.6rem;">A</span>
+                    <span class="font-label">Grande</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Configurações de Som -->
+            <div class="card">
+              <div class="section-title">Configurações de Som</div>
+              <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                <div class="toggle-wrap">
+                  <div class="toggle-left">
+                    <span id="vol-icon">🔊</span>
+                    <span>Som ativado</span>
+                  </div>
+                  <label class="toggle">
+                    <input type="checkbox" id="somToggle" checked onchange="toggleSom()" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+                    <label class="input-label" style="margin:0;">Volume</label>
+                    <span id="volLabel" style="font-size:0.85rem; color:#64748b;">50%</span>
+                  </div>
+                  <input type="range" class="volume-slider" id="volumeRange" min="0" max="100" value="50"
+                    oninput="updateVolume()" />
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /left column -->
+
+          <!-- RIGHT COLUMN - Live Preview -->
+          <div class="preview-column" style="position:sticky; top:1.5rem;">
+            <div class="preview-card" id="previewCard" style="background:#FFB6D9;">
+              <div class="preview-title">Configuração Selecionada</div>
+
+              <div class="preview-body">
+                <span class="preview-emoji" id="previewEmoji">🌎</span>
+                <div class="preview-name text-xl" id="previewNome">Nome do Usuário</div>
+                <button class="preview-btn" onclick="alert('Aqui aparecerão dicas personalizadas para auxiliar o aprendizado!')">
+                  💡 Dicas para auxiliar o aprendizado
+                </button>
+                <div class="preview-info">
+                  <div class="info-row">
+                    <span class="info-label">Tema:</span>
+                    <span class="info-value" id="infoTema">Dora Aventureira</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="info-label">Cor:</span>
+                    <span class="info-value" id="infoCor">Rosa</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="info-label">Fonte:</span>
+                    <span class="info-value" id="infoFonte">Medio</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="info-label">Som:</span>
+                    <span class="info-value" id="infoSom">50%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /page-layout -->
+      </div><!-- /scrollable -->
+
+    </div>
+    
+    <footer class="footer">
+      <button class="btn-save" onclick="salvar()">Salvar e Iniciar</button>
+    </footer>
+
+  </div>
+
+  <script src="js/config.js"></script>
+</body>
+</html>

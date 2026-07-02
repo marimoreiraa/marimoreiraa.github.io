@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCC | Dashboard Pessoal</title>
+  <link rel="icon" type="image/png" href="../assets/coding.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <button class="mobile-nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="../">
+        <img src="../assets/coding.png" alt="Logo do site">
+        <div>
+          <strong>Mari Dashboard</strong>
+          <small>Organizacao Pessoal</small>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="Navegacao principal">
+        <a data-route="home" href="../"><i class="fa-solid fa-house"></i> Home</a>
+        <a data-route="financas" href="../financas/"><i class="fa-solid fa-wallet"></i> Financas</a>
+        <a data-route="estudos" href="../estudos/"><i class="fa-solid fa-graduation-cap"></i> Estudos</a>
+        <a data-route="projetos" href="../projetos/"><i class="fa-solid fa-diagram-project"></i> Projetos</a>
+        <a class="active" data-route="tcc" href="../tcc/"><i class="fa-solid fa-book"></i> TCC</a>
+        <a data-route="sobre" href="../sobre/"><i class="fa-solid fa-user"></i> Sobre Mim</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="page-hero reveal">
+        <span class="pill">Projeto de TCC</span>
+        <h1>Aplicacao Web Acessivel para Pessoas com TEA com foco em IHC e hiperfoco.</h1>
+        <p>Espaco reservado para organizar contexto, metas de validacao, prototipos e resultados de testes em tablet com usuarios autistas.</p>
+      </header>
+
+      <section class="panel reveal">
+        <h2>Resumo do Tema</h2>
+        <p>
+          Desenvolvimento de uma aplicacao web acessivel para pessoas com Transtorno do Espectro Autista,
+          baseada em principios de Interacao Humano-Computador e no uso do hiperfoco como estrategia para
+          aumentar engajamento educacional.
+        </p>
+      </section>
+
+      <section class="cards-grid reveal">
+        <article class="panel">
+          <h2>Objetivos</h2>
+          <ul class="tcc-list">
+            <li class="tag">Aprimorar acessibilidade cognitiva</li>
+            <li class="tag">Validar interface em tablet</li>
+            <li class="tag">Usar feedback de usuarios reais</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <h2>Roadmap Inicial</h2>
+          <ul class="tcc-list">
+            <li class="tag">Prototipo de alta fidelidade</li>
+            <li class="tag">Teste piloto assistido</li>
+            <li class="tag">Coleta de metricas de engajamento</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="panel reveal">
+        <h2>Area para atualizar progresso</h2>
+        <p>Adicione aqui novos marcos do projeto, referencias bibliograficas, resultados de iteracoes e decisoes de design inclusivo.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

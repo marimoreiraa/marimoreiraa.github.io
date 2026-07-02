@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha AWS | Estudos</title>
+  <link rel="icon" type="image/png" href="../../assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <button class="mobile-nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="../../">
+        <img src="../../assets/icone-mari.png" alt="Logo do site">
+        <div><strong>Mari D. Moreira</strong><small>Site Pessoal</small></div>
+      </a>
+      <nav class="main-nav" aria-label="Navegacao principal">
+        <a data-route="home" href="../../"><i class="fa-solid fa-house"></i> Home</a>
+        <a data-route="financas" href="../../financas/"><i class="fa-solid fa-wallet"></i> Financas</a>
+        <a class="active" data-route="estudos" href="../../estudos/"><i class="fa-solid fa-graduation-cap"></i> Estudos</a>
+        <a data-route="tcc" href="../../tcc/"><i class="fa-solid fa-book"></i> TCC</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <header class="page-hero reveal">
+        <span class="pill">Trilha de Estudos</span>
+        <h1>AWS com foco em arquitetura, computacao, dados e seguranca.</h1>
+        <p>Plano pronto com sessoes objetivas, recursos de estudo e revisoes para consolidar aprendizado.</p>
+      </header>
+      <section class="study-plan-wrap reveal" id="study-plan-wrap">
+        <div class="study-plan-header-row">
+          <h2 id="study-plan-title"></h2>
+          <div id="study-plan-pills"></div>
+        </div>
+        <div class="study-stats-row" id="study-plan-stats"></div>
+        <div class="study-progress-wrap">
+          <div class="study-pb-row">
+            <span>Progresso geral</span>
+            <span id="study-progress-label">0 / 0 sessoes</span>
+          </div>
+          <div class="study-pb-track"><div class="study-pb-fill" id="study-pb-fill" style="width:0%"></div></div>
+        </div>
+        <div class="study-filters" id="study-filters"></div>
+        <div id="study-sessions-list"></div>
+      </section>
+    </main>
+  </div>
+  <script>
+    window.STUDY_PLAN_CONFIG = {
+      id: 'aws-20h',
+      title: 'Plano AWS - 20h',
+      stats: [
+        { label: 'Total de horas', value: '20h' },
+        { label: 'Revisao por sessao', value: '15 min' },
+        { label: 'Servicos cobertos', value: '18+' }
+      ],
+      filters: [
+        { value: 'all', label: 'Todas' },
+        { value: 'fundamentos', label: 'Fundamentos' },
+        { value: 'computacao', label: 'Computacao' },
+        { value: 'dados', label: 'Dados' },
+        { value: 'seguranca', label: 'Seguranca e Custo' }
+      ],
+      sessions: [
+        { num: 1, category: 'fundamentos', duration: '2h', title: 'Como a AWS funciona - fundamentos essenciais', topics: ['Modelo de responsabilidade compartilhada', 'Regioes, AZs e edge locations', 'Console, CLI e SDK', 'IAM: usuarios, grupos, roles e politicas'], resources: [{ label: 'Cloud Practitioner Essentials', url: 'https://explore.skillbuilder.aws/learn/course/external/view/elearning/134/aws-cloud-practitioner-essentials' }, { label: 'Documentacao IAM', url: 'https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html' }], review: ['Qual a diferenca entre Regiao e AZ?', 'Quando usar IAM Role ao inves de usuario?', 'Explique o modelo de responsabilidade compartilhada.'] },
+        { num: 2, category: 'computacao', duration: '2h', title: 'EC2 - o coracao da computacao na AWS', topics: ['Tipos de instancia e familias', 'AMIs, Security Groups e Key Pairs', 'Modelos de preco', 'User Data e EC2 Instance Connect'], resources: [{ label: 'Hands-on EC2', url: 'https://aws.amazon.com/getting-started/hands-on/launch-a-virtual-machine/' }], review: ['Quando usar Spot vs Reserved?', 'O que um Security Group controla por padrao?'] },
+        { num: 3, category: 'computacao', duration: '2h', title: 'S3 - armazenamento de objetos universal', topics: ['Buckets, objetos e consistencia', 'Classes de armazenamento', 'Politicas de bucket', 'Versionamento e lifecycle'], resources: [{ label: 'S3 Getting Started', url: 'https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html' }], review: ['Qual storage class escolher para acesso mensal?', 'O que acontece ao deletar um objeto versionado?'] },
+        { num: 4, category: 'computacao', duration: '2h', title: 'VPC - rede privada na nuvem', topics: ['VPC e subnets', 'Internet Gateway vs NAT Gateway', 'Security Groups vs NACLs', 'VPC peering e endpoints'], resources: [{ label: 'VPC Getting Started', url: 'https://docs.aws.amazon.com/vpc/latest/userguide/vpc-getting-started.html' }], review: ['Subnet privada acessa internet como?', 'SG vs NACL: qual e stateful?'] },
+        { num: 5, category: 'computacao', duration: '2h', title: 'ELB + Auto Scaling', topics: ['ALB vs NLB', 'Health checks e target groups', 'Auto Scaling Groups', 'Arquitetura Multi-AZ'], resources: [{ label: 'Hands-on ELB + ASG', url: 'https://aws.amazon.com/getting-started/hands-on/scale-load-balanced-web-server/' }], review: ['Diferença entre ALB e NLB?', 'Como funciona Target Tracking?'] },
+        { num: 6, category: 'dados', duration: '2h', title: 'RDS + DynamoDB', topics: ['RDS e engines', 'Multi-AZ vs Read Replica', 'Partition key e capacity', 'Backups e snapshots'], resources: [{ label: 'RDS Getting Started', url: 'https://aws.amazon.com/rds/getting-started/' }], review: ['Multi-AZ e disponibilidade ou performance?', 'Quando DynamoDB supera RDS?'] },
+        { num: 7, category: 'computacao', duration: '2h', title: 'Lambda + API Gateway', topics: ['Cold start e concorrencia', 'Triggers principais', 'REST vs HTTP API', 'Padrao serverless'], resources: [{ label: 'Hands-on Lambda', url: 'https://aws.amazon.com/getting-started/hands-on/run-serverless-code/' }], review: ['Como mitigar cold start?', 'Como Lambda escala automaticamente?'] },
+        { num: 8, category: 'dados', duration: '2h', title: 'SQS + SNS + EventBridge', topics: ['SQS Standard vs FIFO', 'SNS e fan-out', 'EventBridge e regras', 'Arquiteturas desacopladas'], resources: [{ label: 'SQS Developer Guide', url: 'https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html' }], review: ['Qual a diferenca entre SQS e SNS?', 'Quando usar DLQ?'] },
+        { num: 9, category: 'seguranca', duration: '2h', title: 'Seguranca AWS', topics: ['Least privilege', 'KMS', 'CloudTrail', 'Secrets Manager e WAF'], resources: [{ label: 'Security Pillar', url: 'https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html' }], review: ['CloudTrail registra o que?', 'Como KMS protege dados?'] },
+        { num: 10, category: 'seguranca', duration: '2h', title: 'Custos, monitoramento e Well-Architected', topics: ['CloudWatch', 'Cost Explorer e Budgets', 'Trusted Advisor', 'Revisao geral'], resources: [{ label: 'Well-Architected', url: 'https://aws.amazon.com/architecture/well-architected/' }], review: ['Quais sao os 6 pilares do Well-Architected?', 'Como alertar custo acima de um limite?'] }
+      ]
+    };
+  </script>
+  <script src="../../assets/js/main.js" defer></script>
+  <script src="../../assets/js/study-plan.js" defer></script>
+</body>
+</html>

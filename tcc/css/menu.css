@@ -1,0 +1,83 @@
+/* =====================================================
+   TELA DE MENU — escolha de modo
+   Importa tokens do ds.css
+   ===================================================== */
+
+body { overflow: hidden; }
+
+/* Página: fundo com cor do perfil, layout centralizado */
+.menu-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 1.5rem;
+  background-color: #FFB6D9; /* sobrescrito pelo JS via perfil.cor */
+  transition: background-color 0.4s;
+}
+
+/* Título simples e grande */
+.menu-title {
+  font-family: var(--font);
+  font-size: var(--text-btn);   /* escala com preferência de fonte */
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Cada botão de modo: card branco grande */
+.menu-card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border: 3.5px solid transparent;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform var(--t-fast), box-shadow var(--t-fast), border-color var(--t-fast);
+  /* cor da borda ao focar é aplicada via JS (accent do perfil) */
+}
+.menu-card:hover  {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.13);
+}
+.menu-card:active { transform: scale(0.97); }
+.menu-card:focus-visible {
+  outline: 4px solid var(--accent);
+  outline-offset: 3px;
+}
+/* Ícone grande */
+.menu-card__icon {
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+/* Rótulo principal */
+.menu-card__label {
+  font-family: var(--font);
+  font-size: var(--text-btn);   /* escala com preferência */
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* Descrição secundária — pequena, sem sobrecarregar */
+.menu-card__desc {
+  font-family: var(--font);
+  font-size: var(--text-ui);
+  color: #64748b;
+}
+
+/* Responsivo — mobile */
+@media (max-width: 480px) {
+  .menu-card { padding: 1.5rem 1.25rem; }
+  .menu-card__icon { font-size: 2.8rem; }
+  .menu-page { gap: 1.5rem; }
+}

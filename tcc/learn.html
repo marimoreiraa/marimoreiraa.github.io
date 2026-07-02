@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aprendizado</title>
+  <link rel="stylesheet" href="css/learn.css"/>
+</head>
+<body>
+
+<div class="act-page" id="actPage">
+ 
+  <!-- Personagem + balão (canto superior esquerdo) -->
+  <div class="char-area">
+    <div class="ds-bubble ds-bubble-tail-bl char-bubble" id="charBubble" role="status" aria-live="polite">
+      <span id="bubbleText">…</span>
+    </div>
+    <div class="char-wrapper" id="charWrapper"
+         role="button" aria-label="Toque para repetir">
+      <span class="char-emoji" role="img" aria-label="Personagem">🌎</span>
+    </div>
+  </div>
+ 
+  <!-- Conteúdo central -->
+  <div class="stage" id="stage" role="main" aria-label="Área de aprendizado">
+    <!-- preenchido pelo JS -->
+  </div>
+ 
+  <!-- Barra inferior -->
+  <div class="bottom-bar">
+ 
+    <div class="btn-row">
+      <button class="ds-btn btn-repeat" id="btnRepeat" onclick="repetirInstrucao()"
+              aria-label="Repetir instrução">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+             width="22" height="22" aria-hidden="true">
+          <polyline points="17 1 21 5 17 9"/>
+          <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+          <polyline points="7 23 3 19 7 15"/>
+          <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+        </svg>
+        Repetir
+      </button>
+ 
+      <button class="ds-btn btn-continue ds-hidden" id="btnContinue" onclick="avancar()"
+              aria-label="Continuar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+             width="22" height="22" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 8 16 12 12 16"/>
+          <line x1="8" y1="12" x2="16" y2="12"/>
+        </svg>
+        Continuar
+      </button>
+    </div>
+  </div>
+ 
+</div>
+<script src="js/temas.js"></script>
+<script src="js/fontes.js"></script>
+<script src="js/vogaisLearn.js"></script>
+<script src="js/learn.js"></script>
+
+</body>
+</html>
