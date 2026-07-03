@@ -42,18 +42,32 @@ function tocarAudio(src, onEnd) {
   const playPromise = a.play();
   if (playPromise && typeof playPromise.catch === 'function') {
     playPromise.catch(() => {
-      console.log("Autoplay bloqueado no mobile. Toque no personagem para ouvir o áudio.");
-      // Em caso de falha (mobile), mostra o botão depois de um atraso curto
-      setTimeout(() => {
-        setWaves(false);
-        if (onEnd) onEnd();
-      }, 800);
+      console.log("Autoplay bloqueado. Tentando com muted...");
+      // Se falhar, tenta com muted (funciona em mobile)
+      a.muted = true;
+      a.play().then(() => {
+        console.log("Reproduzindo com muted. Aguardando primeira interação...");
+        // Aguarda primeira interação do usuário para remover muted
+        const removerMuted = () => {
+          a.muted = false;
+          document.removeEventListener('click', removerMuted);
+          document.removeEventListener('touchstart', removerMuted);
+          document.removeEventListener('scroll', removerMuted);
+        };
+        document.addEventListener('click', removerMuted, { once: true });
+        document.addEventListener('touchstart', removerMuted, { once: true });
+        document.addEventListener('scroll', removerMuted, { once: true });
+      }).catch(() => {
+        console.log("Autoplay completamente bloqueado. Usuário deve interagir.");
+        done();
+      });
     });
   } else {
     // Fallback para navegadores antigos
     setTimeout(done, 800);
   }
 
+  // Timeout de segurança
   setTimeout(() => {
     if (a.currentTime === 0 && a.paused) {
       done();

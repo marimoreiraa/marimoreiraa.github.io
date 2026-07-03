@@ -95,10 +95,37 @@ body.font-large {
 
 .layout-act {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Container para cards de imagem em grid */
+.layout-act-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   gap: 1.25rem;
-  flex-wrap: wrap;
+  justify-items: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+@media (max-width: 768px) {
+  .layout-act-images {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .layout-act-images {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.9rem;
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
 }
 
 .layout-vowel-learn {
@@ -370,32 +397,26 @@ body.font-large {
   .ds-btn { height: 3.5rem; padding: 0 1.4rem; }
   .btn-row { gap: 0.8rem; }
   
-  /* Layout em coluna: letra em cima, imagem embaixo */
-  .layout-act {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
   /* Aumentar card de letra */
   .act-card-letter {
     width: clamp(100px, 30vw, 160px);
     height: clamp(100px, 30vw, 160px);
   }
   
-  /* Aumentar card de imagem */
+  /* Ajustar cards de imagem para grid 3 colunas */
   .act-card-image {
-    width: clamp(120px, 32vw, 180px);
-    padding: 1rem 0.9rem 0.9rem;
-    gap: 0.6rem;
+    width: clamp(90px, 28vw, 140px);
+    padding: 0.8rem 0.7rem 0.7rem;
+    gap: 0.5rem;
   }
   
   .act-card-image .card-pic {
-    width: clamp(70px, 16vw, 130px);
-    height: clamp(70px, 16vw, 130px);
+    width: clamp(55px, 14vw, 100px);
+    height: clamp(55px, 14vw, 100px);
   }
   
   .act-card-image .card-emoji-fb {
-    font-size: clamp(3rem, 8vw, 5rem);
+    font-size: clamp(2.5rem, 6vw, 4rem);
   }
   
   /* Aumentar card de vogal */

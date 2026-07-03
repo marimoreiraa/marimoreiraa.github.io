@@ -26,9 +26,25 @@ function tocarAudio(src, onEnd) {
   const playPromise = a.play();
   if (playPromise && typeof playPromise.catch === 'function') {
     playPromise.catch(() => {
-      console.log("Autoplay bloqueado no mobile.");
-      // Timeout curto antes de chamar callback (experiência melhor no mobile)
-      setTimeout(() => onEnd && onEnd(), 300);
+      console.log("Autoplay bloqueado. Tentando com muted...");
+      // Se falhar, tenta com muted (funciona em mobile)
+      a.muted = true;
+      a.play().then(() => {
+        console.log("Reproduzindo com muted. Aguardando primeira interação...");
+        // Aguarda primeira interação do usuário para remover muted
+        const removerMuted = () => {
+          a.muted = false;
+          document.removeEventListener('click', removerMuted);
+          document.removeEventListener('touchstart', removerMuted);
+          document.removeEventListener('scroll', removerMuted);
+        };
+        document.addEventListener('click', removerMuted, { once: true });
+        document.addEventListener('touchstart', removerMuted, { once: true });
+        document.addEventListener('scroll', removerMuted, { once: true });
+      }).catch(() => {
+        console.log("Autoplay completamente bloqueado.");
+        onEnd && onEnd();
+      });
     });
   }
 

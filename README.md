@@ -1,6 +1,6 @@
 # Dashboard Pessoal Multipagina
 
-Sistema pessoal em HTML, CSS e JavaScript puro, pronto para deploy no GitHub Pages.
+Sistema pessoal em HTML, CSS e JavaScript puro, com deploy no GitHub Pages.
 
 ## Paginas
 
