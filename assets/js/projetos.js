@@ -2,7 +2,7 @@
   const projectsContainer = document.getElementById("projects-list") || document.getElementById("home-portfolio-list");
   if (!projectsContainer) return;
 
-  const isProjectsPage = /\/projetos\//.test(window.location.pathname) || window.location.pathname.endsWith("/projetos/index.html");
+  const isProjectsPage = /\/projetos\//.test(window.location.pathname);
   const imageBase = isProjectsPage ? "../assets/" : "./assets/";
 
   const projects = [

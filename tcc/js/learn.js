@@ -16,10 +16,28 @@ function tocarAudio(src, onEnd) {
   }
 
   const a = new Audio(src);
+  a.volume = Math.max(0, Math.min(1, (perfil?.volume ?? 50) / 100));
   audioAtual = a;
 
   a.addEventListener('ended', () => onEnd && onEnd());
-  a.play().catch(() => onEnd && onEnd());
+  a.addEventListener('error', () => onEnd && onEnd());
+  
+  // Trata autoplay bloqueado no mobile
+  const playPromise = a.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => {
+      console.log("Autoplay bloqueado no mobile.");
+      // Timeout curto antes de chamar callback (experiência melhor no mobile)
+      setTimeout(() => onEnd && onEnd(), 300);
+    });
+  }
+
+  // Timeout de segurança
+  setTimeout(() => {
+    if (a.currentTime === 0 && a.paused) {
+      onEnd && onEnd();
+    }
+  }, 30000);
 }
 
 /* ================= UI ================= */

@@ -345,13 +345,62 @@ body.font-large {
 @media (max-width: 768px) {
   .char-img { width: 85px; height: 85px; }
   .char-bubble { max-width: 190px; }
-  .layout-act, .vowel-letters-row { gap: 0.8rem; }
-  .act-card-image { width: clamp(90px, 23vw, 160px); }
+  .layout-act, .vowel-letters-row { gap: 1rem; }
+  
+  /* Aumentar imagens em tablets */
+  .act-card-image { 
+    width: clamp(110px, 25vw, 170px);
+    padding: 1rem 0.85rem 0.85rem;
+  }
+  
+  .act-card-image .card-pic {
+    width: clamp(65px, 12vw, 120px);
+    height: clamp(65px, 12vw, 120px);
+  }
 }
 
 @media (max-width: 480px) {
+  /* Aumentar tamanhos de letra e imagens */
+  :root { 
+    --text-act-letter: 4rem; 
+    --text-act-vowel: 6.5rem; 
+    --text-act-label: 1rem; 
+  }
+  
   .ds-btn { height: 3.5rem; padding: 0 1.4rem; }
   .btn-row { gap: 0.8rem; }
-  .act-card-vowel { width: 100px; height: 100px; }
-  :root { --text-act-letter: 2.4rem; --text-act-vowel: 4rem; --text-act-label: 0.8rem; }
+  
+  /* Layout em coluna: letra em cima, imagem embaixo */
+  .layout-act {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  /* Aumentar card de letra */
+  .act-card-letter {
+    width: clamp(100px, 30vw, 160px);
+    height: clamp(100px, 30vw, 160px);
+  }
+  
+  /* Aumentar card de imagem */
+  .act-card-image {
+    width: clamp(120px, 32vw, 180px);
+    padding: 1rem 0.9rem 0.9rem;
+    gap: 0.6rem;
+  }
+  
+  .act-card-image .card-pic {
+    width: clamp(70px, 16vw, 130px);
+    height: clamp(70px, 16vw, 130px);
+  }
+  
+  .act-card-image .card-emoji-fb {
+    font-size: clamp(3rem, 8vw, 5rem);
+  }
+  
+  /* Aumentar card de vogal */
+  .act-card-vowel { 
+    width: clamp(130px, 32vw, 200px); 
+    height: clamp(130px, 32vw, 200px); 
+  }
 }

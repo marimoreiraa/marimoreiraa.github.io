@@ -39,7 +39,26 @@ function tocarAudio(src, onEnd) {
   a.addEventListener('ended', done);
   a.addEventListener('error', done);
 
-  a.play().catch(done);
+  const playPromise = a.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => {
+      console.log("Autoplay bloqueado no mobile. Toque no personagem para ouvir o áudio.");
+      // Em caso de falha (mobile), mostra o botão depois de um atraso curto
+      setTimeout(() => {
+        setWaves(false);
+        if (onEnd) onEnd();
+      }, 800);
+    });
+  } else {
+    // Fallback para navegadores antigos
+    setTimeout(done, 800);
+  }
+
+  setTimeout(() => {
+    if (a.currentTime === 0 && a.paused) {
+      done();
+    }
+  }, 30000);
 }
 
 /* ================= PERSONAGEM ================= */

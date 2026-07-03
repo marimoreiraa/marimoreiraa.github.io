@@ -2,14 +2,14 @@
   const financeKey = "personalFinanceData";
   const studiesKey = "studyTracksData";
   const ROUTES = {
-    home: "index.html",
-    espacoPessoal: "espaco-pessoal/index.html",
-    financas: "financas/index.html",
-    estudos: "estudos/index.html",
-    projetos: "projetos/index.html",
+    home: "",
+    espacoPessoal: "espaco-pessoal/",
+    financas: "financas/",
+    estudos: "estudos/",
+    projetos: "projetos/",
     tcc: "tcc/config.html",
-    sobre: "sobre/index.html",
-    experiencia: "experiencia/index.html",
+    sobre: "sobre/",
+    experiencia: "experiencia/",
   };
 
   const navToggle = document.querySelector(".mobile-nav-toggle");

@@ -40,7 +40,23 @@ function tocarAudio(src, onEnd) {
   audio.onended = () => onEnd && onEnd();
 
   audioAtual = audio;
-  audio.play().catch(() => onEnd && onEnd());
+  
+  // Tenta reproduzir, com tratamento para autoplay bloqueado no mobile
+  const playPromise = audio.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => {
+      console.log("Autoplay bloqueado no mobile.");
+      // Timeout curto antes de chamar callback (experiência melhor no mobile)
+      setTimeout(() => onEnd && onEnd(), 300);
+    });
+  }
+
+  // Timeout de segurança: se o áudio não terminar em 30s, assume que algo deu errado
+  setTimeout(() => {
+    if (audio.currentTime === 0 && audio.paused) {
+      onEnd && onEnd();
+    }
+  }, 30000);
 }
 
 
