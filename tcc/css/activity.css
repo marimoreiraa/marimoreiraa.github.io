@@ -4,7 +4,11 @@
    TELA DE ATIVIDADE
    ===================================================== */
 
-body { overflow: hidden; }
+body {
+  overflow: hidden;
+  height: 100vh;
+  height: 100dvh; /* exclui a barra do navegador no mobile */
+}
 
 /* ---- ESCALA DE LETRAS DOS CARDS — atrelada à preferência de fonte ---- */
 :root {
@@ -30,7 +34,7 @@ body.font-large {
    PAGE
    ===================================================== */
 .act-page {
-  min-height: 100vh;
+  height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-areas: "top" "main" "bottom";
@@ -91,6 +95,8 @@ body.font-large {
   align-items: center;
   justify-content: center;
   padding: 1rem 1.5rem 0.5rem;
+  overflow-y: auto;
+  min-height: 0; /* permite que o 1fr comprima corretamente */
 }
 
 .layout-act {
@@ -102,28 +108,19 @@ body.font-large {
   width: 100%;
 }
 
-/* Container para cards de imagem em grid */
+/* Container para cards de imagem */
 .layout-act-images {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1.25rem;
-  justify-items: center;
+  justify-content: center;
   width: 100%;
-  max-width: 500px;
-}
-
-@media (max-width: 768px) {
-  .layout-act-images {
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 100%;
-  }
+  max-width: 640px;
 }
 
 @media (max-width: 480px) {
   .layout-act-images {
-    grid-template-columns: repeat(3, 1fr);
     gap: 0.9rem;
-    max-width: 100%;
     padding: 0 0.5rem;
   }
 }

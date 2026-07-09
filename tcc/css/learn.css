@@ -4,7 +4,11 @@
    TELA DE APRENDIZADO
    ===================================================== */
 
-body { overflow: hidden; }
+body {
+  overflow: hidden;
+  height: 100vh;
+  height: 100dvh; /* exclui a barra do navegador no mobile */
+}
 
 /* ---- ESCALA DE LETRAS DOS CARDS — atrelada à preferência de fonte ---- */
 :root {
@@ -30,7 +34,7 @@ body.font-large {
    PAGE
    ===================================================== */
 .act-page {
-  min-height: 100vh;
+  height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-areas: "top" "main" "bottom";
@@ -132,6 +136,8 @@ body.font-large {
   align-items: center;
   justify-content: center;
   padding: 1rem 1.5rem 0.5rem;
+  overflow-y: auto;
+  min-height: 0; /* permite que o 1fr comprima corretamente */
 }
 
 .layout-vowel-learn {
