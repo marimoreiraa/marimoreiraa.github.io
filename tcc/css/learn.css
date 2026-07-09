@@ -7,7 +7,8 @@
 body {
   overflow: hidden;
   height: 100vh;
-  height: 100dvh; /* exclui a barra do navegador no mobile */
+  height: 100dvh;
+  height: var(--app-height, 100dvh); /* JS-powered: visualViewport.height exata */
 }
 
 /* ---- ESCALA DE LETRAS DOS CARDS — atrelada à preferência de fonte ---- */
@@ -257,6 +258,7 @@ body.font-large {
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 1.5rem 1.75rem;
+  padding-bottom: max(1.75rem, env(safe-area-inset-bottom, 0px));
 }
 
 .btn-row {
