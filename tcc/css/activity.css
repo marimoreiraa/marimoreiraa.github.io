@@ -6,9 +6,6 @@
 
 body {
   overflow: hidden;
-  height: 100vh;
-  height: 100dvh;
-  height: var(--app-height, 100dvh); /* JS-powered: visualViewport.height exata */
 }
 
 /* ---- ESCALA DE LETRAS DOS CARDS — atrelada à preferência de fonte ---- */
@@ -35,7 +32,9 @@ body.font-large {
    PAGE
    ===================================================== */
 .act-page {
-  height: 100%;
+  height: 100vh;                    /* fallback absoluto */
+  height: 100dvh;                   /* fallback CSS moderno */
+  height: var(--app-height, 100vh); /* JS: visualViewport.height exata */
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-areas: "top" "main" "bottom";

@@ -11,9 +11,13 @@
         var h=(window.visualViewport||{height:window.innerHeight}).height;
         document.documentElement.style.setProperty('--app-height',h+'px');
       }
-      (window.visualViewport||window).addEventListener('resize',setH);
-      window.addEventListener('orientationchange',function(){setTimeout(setH,100);});
       setH();
+      document.addEventListener('DOMContentLoaded', setH);
+      if(window.visualViewport){
+        window.visualViewport.addEventListener('resize',setH);
+      }
+      window.addEventListener('resize',setH);
+      window.addEventListener('orientationchange',function(){setTimeout(setH,200);});
     })();
   </script>
 </head>
