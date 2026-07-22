@@ -233,6 +233,16 @@ body.font-large {
 }
 .act-card.disabled { pointer-events: none; opacity: 0.55; }
 
+.hidden {
+  display: none !important;
+}
+
+.dica-highlight {
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.32) !important;
+  animation: ds-pulse 1s ease-in-out infinite;
+}
+
 /* =====================================================
    FEEDBACK OVERLAY
    ===================================================== */

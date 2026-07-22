@@ -12,14 +12,26 @@ let audioAtual = null;
 let vogalIdx = 0;
 let rodada = 0;
 let acertouNaPrimeira = true;
+let adaptadorAtividade = null;
+
+const INTERACTIVITY_DELAY_MS = 3000;
+const metricasInteracaoSilenciosa = [];
+let metricaRodadaAtual = null;
 
 
 /* =====================================================
    ÁUDIO
 ===================================================== */
 function tocarAudio(src, onEnd) {
-  if (!src) {
+  let finalizado = false;
+  const finalizar = () => {
+    if (finalizado) return;
+    finalizado = true;
     onEnd && onEnd();
+  };
+
+  if (!src) {
+    finalizar();
     return;
   }
 
@@ -34,10 +46,10 @@ function tocarAudio(src, onEnd) {
 
   audio.onerror = () => {
     console.warn("Erro ao carregar áudio:", src);
-    onEnd && onEnd();
+    finalizar();
   };
 
-  audio.onended = () => onEnd && onEnd();
+  audio.onended = finalizar;
 
   audioAtual = audio;
   
@@ -62,7 +74,7 @@ function tocarAudio(src, onEnd) {
         document.addEventListener('scroll', removerMuted, { once: true });
       }).catch(() => {
         console.log("Autoplay completamente bloqueado.");
-        onEnd && onEnd();
+        finalizar();
       });
     });
   }
@@ -70,9 +82,21 @@ function tocarAudio(src, onEnd) {
   // Timeout de segurança: se o áudio não terminar em 30s, assume que algo deu errado
   setTimeout(() => {
     if (audio.currentTime === 0 && audio.paused) {
-      onEnd && onEnd();
+      finalizar();
     }
   }, 30000);
+}
+
+function tocarAudioAsync(src) {
+  return new Promise((resolve) => {
+    tocarAudio(src, resolve);
+  });
+}
+
+function aguardar(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 }
 
 
@@ -215,6 +239,48 @@ function desbloquearCards() {
   });
 }
 
+function iniciarTimerSilencioso(vogal) {
+  metricaRodadaAtual = {
+    vogal,
+    rodada: rodada + 1,
+    inicioMs: performance.now(),
+    tempoAteLiberacaoMs: null,
+    tempoAtePrimeiroCliqueMs: null,
+  };
+}
+
+function registrarLiberacaoInteratividade() {
+  if (!metricaRodadaAtual || metricaRodadaAtual.tempoAteLiberacaoMs !== null) return;
+
+  metricaRodadaAtual.tempoAteLiberacaoMs = Math.round(
+    performance.now() - metricaRodadaAtual.inicioMs
+  );
+}
+
+function registrarPrimeiroCliqueSilencioso() {
+  if (!metricaRodadaAtual || metricaRodadaAtual.tempoAtePrimeiroCliqueMs !== null) return;
+
+  metricaRodadaAtual.tempoAtePrimeiroCliqueMs = Math.round(
+    performance.now() - metricaRodadaAtual.inicioMs
+  );
+
+  metricasInteracaoSilenciosa.push({ ...metricaRodadaAtual });
+  window.__activitySilentMetrics = metricasInteracaoSilenciosa;
+}
+
+async function aplicarGateDeInteratividade(audioPrincipalSrc) {
+  bloquearCards();
+
+  const esperaMinima = aguardar(INTERACTIVITY_DELAY_MS);
+  const audioPrincipal = modo === "enhanced"
+    ? tocarAudioAsync(audioPrincipalSrc)
+    : Promise.resolve();
+
+  await Promise.all([esperaMinima, audioPrincipal]);
+  registrarLiberacaoInteratividade();
+  desbloquearCards();
+}
+
 
 /* =====================================================
    RODADAS
@@ -236,15 +302,12 @@ function renderAtividade() {
 
   acertouNaPrimeira = true;
   setBubble(v.instrucaoAt);
-
-  if (modo === "enhanced") {
-    tocarAudio(v.audioAtivIntro);
-  }
+  iniciarTimerSilencioso(v.letra);
 
   const config = RODADAS[Math.min(rodada, RODADAS.length - 1)];
 
-  const corretas = shuffle([...v.corretas]).slice(0, config.corretas);
-  const erradas  = shuffle([...v.erradas]).slice(0, config.erradas);
+  const corretas = shuffle(v.corretas).slice(0, config.corretas);
+  const erradas  = shuffle(v.erradas).slice(0, config.erradas);
 
   const opcoes = shuffle([...corretas, ...erradas]);
 
@@ -262,10 +325,11 @@ function renderAtividade() {
   const imagesContainer = document.createElement('div');
   imagesContainer.className = 'layout-act-images';
 
-  opcoes.forEach(item => {
+  opcoes.forEach((item, idx) => {
     const correta = v.corretas.some(c => c.nome === item.nome);
 
     const card = criarCardImagem(item, correta, (el, it, isCorrect) => {
+      registrarPrimeiroCliqueSilencioso();
 
       bloquearCards();
 
@@ -290,11 +354,20 @@ function renderAtividade() {
       }
     });
 
+    card.dataset.optionIndex = String(idx);
+    card.dataset.correct = String(correta);
+
     imagesContainer.appendChild(card);
   });
 
   layout.appendChild(imagesContainer);
   stage.appendChild(layout);
+
+  if (adaptadorAtividade) {
+    adaptadorAtividade.configurarRodada(imagesContainer);
+  }
+
+  aplicarGateDeInteratividade(v.audioAtivIntro);
 
 
   function tratarAcerto(el) {
@@ -383,7 +456,14 @@ function avancarParaProximaVogal() {
    UTIL
 ===================================================== */
 function shuffle(arr) {
-  return arr.sort(() => Math.random() - 0.5);
+  const copia = [...arr];
+
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+
+  return copia;
 }
 
 
@@ -430,6 +510,12 @@ function init() {
   vogalIdx = parseInt(params.get('vogal') || '0');
 
   atualizarProgresso();
+
+  if (typeof window.criarAdaptadorAtividade === 'function') {
+    adaptadorAtividade = window.criarAdaptadorAtividade();
+    window.__estadoUsuarioAtividade = adaptadorAtividade.estadoUsuario;
+  }
+
   renderAtividade();
 }
 
