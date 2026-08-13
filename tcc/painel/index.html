@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#EFF6EE">
+  <link rel="manifest" href="../manifest.json">
+  <title>Painel</title>
+  <link rel="stylesheet" href="../static/painel/style.css">
+</head>
+<body>
+  <div id="tela-inicio" class="tela ativa" onclick="iniciar()">
+    <div class="msg-inicio">
+      <div class="icone-toque">👆</div>
+      <div class="texto-toque">Toque para começar</div>
+    </div>
+  </div>
+
+  <div id="tela-livre" class="tela">
+    <div class="conteudo-livre">
+      <div class="emoji-livre">✅</div>
+      <div class="texto-livre">Tudo pronto por enquanto!</div>
+    </div>
+  </div>
+
+  <div id="tela-tarefa" class="tela">
+    <div class="conteudo-tarefa">
+      <div class="moldura-foto">
+        <img id="foto-tarefa" src="" alt="Tarefa atual">
+      </div>
+      <button id="btn-concluir" class="botao-concluir" onclick="concluirTarefa()">
+        <span class="icone-check">✔</span>
+      </button>
+    </div>
+  </div>
+
+  <audio id="audio-tarefa" preload="auto"></audio>
+  <audio id="audio-sucesso" src="../static/sounds/sucesso.wav" preload="auto"></audio>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCWETQhgszkYUtuADX0SZ14CkxuP_ekz8M",
+      authDomain: "rotina-tea.firebaseapp.com",
+      projectId: "rotina-tea",
+      storageBucket: "rotina-tea.firebasestorage.app",
+      messagingSenderId: "153201667136",
+      appId: "1:153201667136:web:e0e891c2cd45d29e9703a5"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    window.auth = getAuth(app);
+    window.db = getFirestore(app);
+    window.firestore = { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot };
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      navigator.serviceWorker.register("../sw.js").catch(console.error);
+    }
+    await import("../static/painel/app.js");
+  </script>
+</body>
+</html>

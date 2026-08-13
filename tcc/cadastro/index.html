@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2E63E8">
+  <title>Cadastrar | Painel Autonomia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; display: grid; place-items: center; padding: 24px; background: #F5F6F8; color: #23272F; font-family: -apple-system, "Segoe UI", sans-serif; }
+    main { width: min(100%, 420px); padding: 32px; background: #FFF; border: 1px solid #E1E4E8; border-radius: 18px; box-shadow: 0 16px 40px rgba(35, 39, 47, .1); }
+    h1 { margin: 0 0 8px; color: #244FBB; font-family: Georgia, serif; }
+    p { color: #626A75; line-height: 1.5; }
+    label { display: block; margin-top: 16px; font-weight: 600; font-size: .9rem; color: #555C66; }
+    input { display: block; width: 100%; margin-top: 7px; padding: 13px; border: 1px solid #D8DBE0; border-radius: 10px; font-size: 1rem; }
+    button { width: 100%; margin-top: 24px; padding: 14px; border: 0; border-radius: 10px; background: #2E63E8; color: #FFF; font-weight: 700; font-size: 1rem; }
+    a { display: block; margin-top: 18px; text-align: center; color: #244FBB; font-weight: 700; }
+    #mensagem { min-height: 1.3em; color: #D64545; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Criar acesso</h1>
+    <p>Cadastre o e-mail da cuidadora para administrar este painel.</p>
+    <form id="form-cadastro">
+      <label for="email">E-mail</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+      <label for="senha">Senha</label>
+      <input id="senha" name="senha" type="password" minlength="6" autocomplete="new-password" required>
+      <button type="submit">Cadastrar</button>
+      <p id="mensagem" role="alert"></p>
+    </form>
+    <a href="../login/">Voltar para entrar</a>
+  </main>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+    const app = initializeApp({
+      apiKey: "AIzaSyCWETQhgszkYUtuADX0SZ14CkxuP_ekz8M",
+      authDomain: "rotina-tea.firebaseapp.com",
+      projectId: "rotina-tea",
+      storageBucket: "rotina-tea.firebasestorage.app",
+      messagingSenderId: "153201667136",
+      appId: "1:153201667136:web:e0e891c2cd45d29e9703a5"
+    });
+    const auth = getAuth(app);
+    const form = document.getElementById("form-cadastro");
+    const mensagem = document.getElementById("mensagem");
+    form.addEventListener("submit", async (evento) => {
+      evento.preventDefault();
+      try {
+        await createUserWithEmailAndPassword(auth, form.email.value.trim(), form.senha.value);
+        window.location.replace("../admin/");
+      } catch (erro) {
+        mensagem.textContent = "Não foi possível criar a conta. Verifique o e-mail e a senha.";
+      }
+    });
+  </script>
+</body>
+</html>

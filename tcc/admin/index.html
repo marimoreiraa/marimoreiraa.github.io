@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2E63E8">
+  <link rel="manifest" href="../manifest.json">
+  <title>Painel do Cuidador</title>
+  <link rel="stylesheet" href="static/admin/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🗓️ Rotina do Dia</h1>
+    <div class="acoes-header">
+      <a href="../painel/" class="link-painel" target="_blank">Abrir painel da jovem ↗</a>
+      <button type="button" id="btn-sair" class="btn-sair">Sair</button>
+    </div>
+  </header>
+
+  <section class="card">
+    <h2>Nova tarefa</h2>
+    <form id="form-tarefa">
+      <label>Título interno (só o cuidador vê)
+        <input type="text" name="titulo" placeholder="Ex: Água dos cachorros" required>
+      </label>
+      <label>Horário
+        <input type="time" name="horario" required>
+      </label>
+      <fieldset>
+        <legend>Dias da semana</legend>
+        <div class="dias-semana">
+          <label><input type="checkbox" name="dias" value="0" checked> Dom</label>
+          <label><input type="checkbox" name="dias" value="1" checked> Seg</label>
+          <label><input type="checkbox" name="dias" value="2" checked> Ter</label>
+          <label><input type="checkbox" name="dias" value="3" checked> Qua</label>
+          <label><input type="checkbox" name="dias" value="4" checked> Qui</label>
+          <label><input type="checkbox" name="dias" value="5" checked> Sex</label>
+          <label><input type="checkbox" name="dias" value="6" checked> Sab</label>
+        </div>
+      </fieldset>
+      <label>Foto
+        <div class="opcoes-midia">
+          <button type="button" id="btn-tirar-foto" class="botao-midia">📷 Tirar foto agora</button>
+          <button type="button" id="btn-escolher-foto" class="botao-midia botao-midia-secundario">🖼️ Escolher da galeria</button>
+        </div>
+        <input type="file" id="input-foto-camera" accept="image/*" capture="environment" class="input-oculto">
+        <input type="file" id="input-foto-galeria" accept="image/*" class="input-oculto">
+        <div id="preview-foto" class="preview-midia"></div>
+      </label>
+      <label>Áudio de instrução
+        <div class="opcoes-midia">
+          <button type="button" id="btn-gravar-audio" class="botao-midia">🎙️ Gravar áudio agora</button>
+          <button type="button" id="btn-escolher-audio" class="botao-midia botao-midia-secundario">📁 Escolher arquivo</button>
+        </div>
+        <input type="file" id="input-audio-arquivo" accept="audio/*" class="input-oculto">
+        <p id="aviso-gravacao" class="aviso-gravacao"></p>
+        <div id="preview-audio" class="preview-midia"></div>
+      </label>
+      <button type="submit">Salvar tarefa</button>
+      <p id="msg-form" class="mensagem"></p>
+    </form>
+  </section>
+  <section class="card">
+    <h2>Tarefas cadastradas</h2>
+    <div id="lista-tarefas" class="lista-tarefas"><p class="carregando">Carregando...</p></div>
+  </section>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyCWETQhgszkYUtuADX0SZ14CkxuP_ekz8M",
+    authDomain: "rotina-tea.firebaseapp.com",
+    projectId: "rotina-tea",
+    storageBucket: "rotina-tea.firebasestorage.app",
+    messagingSenderId: "153201667136",
+    appId: "1:153201667136:web:e0e891c2cd45d29e9703a5"
+  };
+  const app = initializeApp(firebaseConfig);
+  window.auth = getAuth(app);
+  window.db = getFirestore(app);
+  window.firestore = { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot };
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    navigator.serviceWorker.register("../sw.js").catch(console.error);
+  }
+  await import("../static/admin/admin.js");
+</script>
+</body>
+</html>

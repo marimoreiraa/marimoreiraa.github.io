@@ -1,0 +1,281 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #F5F6F8;
+  font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #23272F;
+}
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+.link-painel {
+  color: #2E63E8;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.acoes-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-sair {
+  padding: 7px 11px;
+  border: 1px solid #D64545;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #D64545;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+}
+
+form label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555C66;
+  margin-bottom: 12px;
+}
+
+form input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #D8DBE0;
+  border-radius: 10px;
+  background: #FAFBFC;
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 12px;
+}
+
+fieldset legend {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555C66;
+  margin-bottom: 6px;
+}
+
+.dias-semana {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dias-semana label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 7px 9px;
+  border: 1px solid #D8DBE0;
+  border-radius: 8px;
+  background: #FAFBFC;
+  font-size: 0.78rem;
+}
+
+.dias-semana input {
+  width: auto;
+  margin: 0;
+}
+
+form button {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: #2E63E8;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+form button:active {
+  background: #244FBB;
+}
+
+.mensagem {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  min-height: 1.2em;
+}
+
+.mensagem.sucesso { color: #2E9E4A; }
+.mensagem.erro { color: #D64545; }
+
+.lista-tarefas .carregando {
+  color: #8A909B;
+  font-size: 0.9rem;
+}
+
+.item-tarefa {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #EEF0F3;
+}
+
+.item-tarefa:last-child {
+  border-bottom: none;
+}
+
+.item-tarefa .miniatura {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #EEF0F3;
+  flex-shrink: 0;
+}
+
+.item-tarefa .info {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-tarefa .titulo {
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-tarefa .horario {
+  font-size: 0.8rem;
+  color: #8A909B;
+}
+
+.opcoes-midia {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.botao-midia {
+  flex: 1;
+  min-width: 140px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: #2E63E8;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.botao-midia:active {
+  background: #244FBB;
+}
+
+.botao-midia-secundario {
+  background: #EEF0F3;
+  color: #23272F;
+}
+
+.botao-midia-secundario:active {
+  background: #D8DBE0;
+}
+
+.botao-midia.gravando {
+  background: #D64545;
+}
+
+.input-oculto {
+  display: none;
+}
+
+.preview-midia {
+  margin-top: 8px;
+}
+
+.preview-midia img {
+  max-width: 100%;
+  max-height: 160px;
+  border-radius: 10px;
+  display: block;
+}
+
+.preview-midia audio {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.aviso-gravacao {
+  font-size: 0.78rem;
+  color: #A9720B;
+  margin-top: 6px;
+  min-height: 1em;
+}
+
+.status-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.status-pill.pendente {
+  background: #FFF1D6;
+  color: #A9720B;
+}
+
+.status-pill.concluida {
+  background: #E1F6E4;
+  color: #2E9E4A;
+}
+
+.btn-excluir {
+  background: none;
+  border: none;
+  color: #D64545;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+}
