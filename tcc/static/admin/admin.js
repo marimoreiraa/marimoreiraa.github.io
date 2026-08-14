@@ -22,6 +22,37 @@ const avisoGravacao = document.getElementById("aviso-gravacao");
 const btnSair = document.getElementById("btn-sair");
 
 let cancelarListenerTarefas = null;
+let listenerInicializado = false;
+
+async function solicitarPermissaoNotificacoes() {
+  if (!("Notification" in window) || Notification.permission !== "default") return;
+
+  try {
+    await Notification.requestPermission();
+  } catch (erro) {
+    console.warn("Não foi possível solicitar permissão para notificações:", erro);
+  }
+}
+
+async function notificarAtualizacao(tarefa) {
+  if (!("Notification" in window) || Notification.permission !== "granted") return;
+
+  const acao = tarefa.status === "recusada" ? "recusada" : "concluída";
+  const opcoes = {
+    body: `A tarefa ${tarefa.titulo} foi ${acao}!`,
+    icon: "../icone.png",
+    tag: `rotina-${tarefa.id}-${tarefa.statusEm || tarefa.concluidaEm}`,
+  };
+
+  try {
+    new Notification("Atualização de Rotina", opcoes);
+  } catch (erro) {
+    const registro = await navigator.serviceWorker?.ready;
+    await registro?.showNotification("Atualização de Rotina", opcoes);
+  }
+}
+
+solicitarPermissaoNotificacoes();
 
 onAuthStateChanged(auth, (usuario) => {
   if (!usuario) {
@@ -36,6 +67,17 @@ onAuthStateChanged(auth, (usuario) => {
 
   cancelarListenerTarefas?.();
   cancelarListenerTarefas = onSnapshot(tarefasDaCuidadora, (snapshot) => {
+    if (listenerInicializado) {
+      snapshot.docChanges().forEach((alteracao) => {
+        if (alteracao.type !== "modified" || alteracao.doc.metadata.hasPendingWrites) return;
+        const tarefa = { id: alteracao.doc.id, ...alteracao.doc.data() };
+        if (["concluida", "recusada"].includes(tarefa.status) && tarefaFinalizadaHoje(tarefa)) {
+          notificarAtualizacao(tarefa);
+        }
+      });
+    }
+    listenerInicializado = true;
+
     const tarefas = snapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
     tarefas.sort((a, b) => a.horario.localeCompare(b.horario));
     renderizarTarefas(tarefas);
@@ -216,10 +258,14 @@ form.addEventListener("submit", async (evento) => {
     await addDoc(collection(db, "tarefas"), {
       titulo: form.querySelector('[name="titulo"]').value.trim(),
       horario: form.querySelector('[name="horario"]').value,
+      textoInstrucao: form.querySelector('[name="textoInstrucao"]').value.trim(),
+      opcional: form.querySelector('[name="opcional"]').checked,
       dias,
       uid: auth.currentUser.uid,
       imagemBase64,
       audioBase64,
+      status: "pendente",
+      statusEm: null,
       concluidaEm: null,
       criadoEm: new Date().toISOString(),
     });
@@ -273,15 +319,17 @@ function renderizarTarefas(tarefas) {
 
   listaTarefas.innerHTML = tarefas
     .map((t) => {
-      const statusClasse = tarefaConcluidaHoje(t) ? "concluida" : "pendente";
-      const statusTexto = tarefaConcluidaHoje(t) ? "Concluída" : "Pendente";
+      const finalizadaHoje = tarefaFinalizadaHoje(t);
+      const recusadaHoje = finalizadaHoje && t.status === "recusada";
+      const statusClasse = recusadaHoje ? "recusada" : finalizadaHoje ? "concluida" : "pendente";
+      const statusTexto = recusadaHoje ? "Recusada" : finalizadaHoje ? "Concluída" : "Pendente";
 
       return `
         <div class="item-tarefa">
           <img class="miniatura" src="${t.imagemBase64 || ""}" alt="">
           <div class="info">
             <div class="titulo">${escapeHtml(t.titulo)}</div>
-            <div class="horario">${t.horario}</div>
+            <div class="horario">${t.horario}${t.opcional ? " · Opcional" : ""}</div>
           </div>
           <span class="status-pill ${statusClasse}">${statusTexto}</span>
           <button class="btn-excluir" title="Excluir" data-id="${t.id}">🗑️</button>
@@ -291,8 +339,9 @@ function renderizarTarefas(tarefas) {
     .join("");
 }
 
-function tarefaConcluidaHoje(tarefa) {
-  return tarefa.concluidaEm && new Date(tarefa.concluidaEm).toDateString() === new Date().toDateString();
+function tarefaFinalizadaHoje(tarefa) {
+  const dataFinalizacao = tarefa.statusEm || tarefa.concluidaEm;
+  return dataFinalizacao && new Date(dataFinalizacao).toDateString() === new Date().toDateString();
 }
 
 async function excluirTarefa(id) {

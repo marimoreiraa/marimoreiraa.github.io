@@ -9,6 +9,19 @@
   <link rel="stylesheet" href="../static/painel/style.css">
 </head>
 <body>
+  <button id="btn-configuracoes" class="btn-configuracoes" type="button" aria-label="Configurar modo de exibição" title="Configurar modo de exibição">⚙</button>
+  <aside id="configuracoes" class="configuracoes" hidden>
+    <label for="modo-exibicao">Modo de exibição</label>
+    <select id="modo-exibicao">
+      <option value="fixo">Painel fixo</option>
+      <option value="pessoal">Dispositivo pessoal (Dia a dia)</option>
+    </select>
+    <label class="configuracao-checkbox">
+      <input id="mostrar-texto-fixo" type="checkbox">
+      Mostrar instrução escrita no painel fixo
+    </label>
+  </aside>
+
   <div id="tela-inicio" class="tela ativa" onclick="iniciar()">
     <div class="msg-inicio">
       <div class="icone-toque">👆</div>
@@ -25,16 +38,25 @@
 
   <div id="tela-tarefa" class="tela">
     <div class="conteudo-tarefa">
+      <div class="detalhes-tarefa">
+        <h1 id="titulo-tarefa"></h1>
+        <p id="texto-instrucao"></p>
+      </div>
       <div class="moldura-foto">
         <img id="foto-tarefa" src="" alt="Tarefa atual">
       </div>
-      <button id="btn-concluir" class="botao-concluir" onclick="concluirTarefa()">
-        <span class="icone-check">✔</span>
-      </button>
+      <audio id="audio-tarefa" class="player-instrucao" preload="auto" controls></audio>
+      <div class="acoes-tarefa">
+        <button id="btn-concluir" class="botao-acao botao-concluir" onclick="concluirTarefa()" aria-label="Concluir tarefa">
+          <span class="icone-acao">✔</span>
+        </button>
+        <button id="btn-recusar" class="botao-acao botao-recusar" onclick="recusarTarefa()" aria-label="Recusar tarefa" hidden>
+          <span class="icone-acao">✕</span>
+        </button>
+      </div>
     </div>
   </div>
 
-  <audio id="audio-tarefa" preload="auto"></audio>
   <audio id="audio-sucesso" src="../static/sounds/sucesso.wav" preload="auto"></audio>
 
   <script type="module">

@@ -1,4 +1,4 @@
-const CACHE_NAME = "painel-autonomia-v1";
+const CACHE_NAME = "painel-autonomia-v2";
 const ARQUIVOS_INICIAIS = [
   "./",
   "./login/",
@@ -6,8 +6,11 @@ const ARQUIVOS_INICIAIS = [
   "./painel/",
   "./cadastro/",
   "./manifest.json",
+  "./icone.png",
   "./static/painel/style.css",
+  "./static/painel/app.js",
   "./static/admin/admin.css",
+  "./static/admin/admin.js",
   "./static/sounds/sucesso.wav"
 ];
 
@@ -17,7 +20,11 @@ self.addEventListener("install", (evento) => {
 });
 
 self.addEventListener("activate", (evento) => {
-  evento.waitUntil(self.clients.claim());
+  evento.waitUntil(
+    caches.keys()
+      .then((nomes) => Promise.all(nomes.filter((nome) => nome !== CACHE_NAME).map((nome) => caches.delete(nome))))
+      .then(() => self.clients.claim()),
+  );
 });
 
 self.addEventListener("fetch", (evento) => {

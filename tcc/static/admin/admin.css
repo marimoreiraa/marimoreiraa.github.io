@@ -83,6 +83,22 @@ form input {
   background: #FAFBFC;
 }
 
+.opcao-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid #D8DBE0;
+  border-radius: 10px;
+  background: #FAFBFC;
+}
+
+.opcao-checkbox input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+
 fieldset {
   border: 0;
   padding: 0;
@@ -269,6 +285,11 @@ form button:active {
 .status-pill.concluida {
   background: #E1F6E4;
   color: #2E9E4A;
+}
+
+.status-pill.recusada {
+  background: #FDE8E8;
+  color: #B83737;
 }
 
 .btn-excluir {
