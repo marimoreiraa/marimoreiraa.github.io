@@ -192,7 +192,7 @@ async function concluirTarefa() {
 }
 
 async function recusarTarefa() {
-  if (!tarefaAtual?.opcional) return;
+  if (tarefaAtual?.opcional !== true) return;
   await finalizarTarefa("recusada");
 }
 

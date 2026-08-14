@@ -201,6 +201,21 @@ html, body {
   cursor: pointer;
 }
 
+body[data-modo="fixo"] .moldura-foto {
+  flex: 0 1 auto;
+  width: auto;
+  height: auto;
+  max-height: 45vh;
+}
+
+body[data-modo="fixo"] #foto-tarefa {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 45vh;
+  object-fit: contain;
+}
+
 .player-instrucao {
   display: none;
 }
@@ -222,6 +237,10 @@ html, body {
   justify-content: center;
   cursor: pointer;
   transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.botao-recusar[hidden] {
+  display: none;
 }
 
 .botao-concluir {
