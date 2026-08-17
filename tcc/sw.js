@@ -31,3 +31,13 @@ self.addEventListener("fetch", (evento) => {
   if (new URL(evento.request.url).origin !== self.location.origin) return;
   evento.respondWith(caches.match(evento.request).then((resposta) => resposta || fetch(evento.request)));
 });
+
+self.addEventListener("notificationclick", (evento) => {
+  evento.notification.close();
+  evento.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientes) => {
+      const cliente = clientes.find((item) => "focus" in item);
+      return cliente ? cliente.focus() : self.clients.openWindow("./painel/");
+    }),
+  );
+});

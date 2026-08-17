@@ -79,24 +79,30 @@ function chaveNotificacao(tarefa) {
 
 async function notificarHoraDaTarefa(tarefa) {
   if (!("Notification" in window) || Notification.permission !== "granted") return;
-  if (!document.hidden && modoExibicao !== "pessoal") return;
 
   const chave = chaveNotificacao(tarefa);
-  if (localStorage.getItem(chave)) return;
+  const ultimaNotificacao = Number(localStorage.getItem(chave) || 0);
+  if (Date.now() - ultimaNotificacao < INTERVALO_REPETICAO_MS) return;
 
   const opcoes = {
     body: tarefa.textoInstrucao || tarefa.titulo,
     icon: "../icone.png",
     tag: `hora-tarefa-${tarefa.id}`,
+    renotify: ultimaNotificacao > 0,
+    requireInteraction: true,
   };
 
   try {
-    new Notification("Hora da Tarefa!", opcoes);
-  } catch (erro) {
     const registro = await navigator.serviceWorker?.ready;
-    await registro?.showNotification("Hora da Tarefa!", opcoes);
+    if (registro) {
+      await registro.showNotification("Hora da Tarefa!", opcoes);
+    } else {
+      new Notification("Hora da Tarefa!", opcoes);
+    }
+    localStorage.setItem(chave, String(Date.now()));
+  } catch (erro) {
+    console.warn("Não foi possível exibir a notificação da tarefa:", erro);
   }
-  localStorage.setItem(chave, "true");
 }
 
 btnConfiguracoes.addEventListener("click", () => {
@@ -124,8 +130,8 @@ function mostrarTela(tela, nome) {
   telaAtual = nome;
 }
 
-function iniciar() {
-  solicitarPermissaoNotificacoes();
+async function iniciar() {
+  await solicitarPermissaoNotificacoes();
   // Um toque real do usuário "libera" o áudio para tocar sozinho depois.
   audioTarefa.play().catch(() => {});
   audioTarefa.pause();
@@ -151,6 +157,7 @@ function atualizarTarefaAtiva() {
       exibirTarefa(tarefa);
     } else if (Date.now() - ultimoAudioTocadoEm >= INTERVALO_REPETICAO_MS) {
       tocarAudioInstrucao(tarefa.audioBase64);
+      notificarHoraDaTarefa(tarefa);
     }
   } else {
     tarefaAtualId = null;
