@@ -84,4 +84,3 @@ Para evitar saidas acidentais do app pela usuaria:
 - **Regras de seguranca:** Publique `firestore.rules` com `firebase deploy --only firestore:rules` e habilite o provedor **E-mail/Senha** no Firebase Authentication.
 - **Tempo real (`onSnapshot`):** Diferente da V1, que fazia consultas via *polling* a cada 5 segundos, o aplicativo utiliza o ouvinte nativo do Firebase. Cadastros ou conclusoes feitas no celular do cuidador refletem em tempo real na tela do painel da jovem, sem necessidade de atualizar a pagina.
 - **Autoplay de audio:** Como os navegadores moveis bloqueiam audios automaticos por padrao, a interface exige uma primeira interacao humana na tela de descanso para inicializar a API de audio. Uma vez ativada, os audios das tarefas poderao tocar de forma autonoma.
-

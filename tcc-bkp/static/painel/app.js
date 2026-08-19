@@ -31,11 +31,9 @@ const mostrarTextoFixo = document.getElementById("mostrar-texto-fixo");
 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 import { collection, onSnapshot, updateDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-import { registrarDispositivoPush } from "../shared/push.js";
 
 const auth = window.auth;
 const db = window.db;
-const firebaseApp = window.firebaseApp;
 
 const INTERVALO_REPETICAO_MS = 10 * 60 * 1000;
 
@@ -47,14 +45,6 @@ let cancelarListenerTarefas = null;
 let tarefaAtual = null;
 let modoExibicao = localStorage.getItem("modoExibicao") || "fixo";
 let exibirTextoNoFixo = localStorage.getItem("mostrarTextoFixo") === "true";
-let uidAtual = null;
-let pushJaRegistrado = false;
-
-async function registrarPushSeNecessario() {
-  if (!uidAtual || pushJaRegistrado) return;
-  const token = await registrarDispositivoPush(firebaseApp, db, uidAtual, "participante");
-  if (token) pushJaRegistrado = true;
-}
 
 async function solicitarPermissaoNotificacoes() {
   if (!("Notification" in window) || Notification.permission !== "default") return;
@@ -124,7 +114,6 @@ seletorModo.addEventListener("change", () => {
   localStorage.setItem("modoExibicao", modoExibicao);
   aplicarModoExibicao();
   solicitarPermissaoNotificacoes();
-  if (modoExibicao === "pessoal") registrarPushSeNecessario();
 });
 
 mostrarTextoFixo.addEventListener("change", () => {
@@ -143,7 +132,6 @@ function mostrarTela(tela, nome) {
 
 async function iniciar() {
   await solicitarPermissaoNotificacoes();
-  if (modoExibicao === "pessoal") await registrarPushSeNecessario();
   // Um toque real do usuário "libera" o áudio para tocar sozinho depois.
   audioTarefa.play().catch(() => {});
   audioTarefa.pause();
@@ -262,9 +250,6 @@ onAuthStateChanged(auth, (usuario) => {
     window.location.replace("../login/");
     return;
   }
-
-  uidAtual = usuario.uid;
-  if (modoExibicao === "pessoal") registrarPushSeNecessario();
 
   const tarefasDaCuidadora = query(
     collection(db, "tarefas"),

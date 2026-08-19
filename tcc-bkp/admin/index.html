@@ -88,7 +88,6 @@
     appId: "1:153201667136:web:e0e891c2cd45d29e9703a5"
   };
   const app = initializeApp(firebaseConfig);
-  window.firebaseApp = app;
   window.auth = getAuth(app);
   window.db = getFirestore(app);
   window.firestore = { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot };

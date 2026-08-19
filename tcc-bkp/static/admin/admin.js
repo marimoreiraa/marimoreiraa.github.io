@@ -1,10 +1,8 @@
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 import { collection, addDoc, deleteDoc, doc, onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-import { registrarDispositivoPush } from "../shared/push.js";
 
 const auth = window.auth;
 const db = window.db;
-const firebaseApp = window.firebaseApp;
 
 const form = document.getElementById("form-tarefa");
 const msgForm = document.getElementById("msg-form");
@@ -66,8 +64,6 @@ onAuthStateChanged(auth, (usuario) => {
     collection(db, "tarefas"),
     where("uid", "==", usuario.uid),
   );
-
-  registrarDispositivoPush(firebaseApp, db, usuario.uid, "cuidador");
 
   cancelarListenerTarefas?.();
   cancelarListenerTarefas = onSnapshot(tarefasDaCuidadora, (snapshot) => {

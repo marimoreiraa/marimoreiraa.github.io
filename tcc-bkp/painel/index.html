@@ -74,7 +74,6 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    window.firebaseApp = app;
     window.auth = getAuth(app);
     window.db = getFirestore(app);
     window.firestore = { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot };

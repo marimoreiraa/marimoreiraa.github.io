@@ -1,0 +1,16 @@
+{
+  "name": "Painel Autonomia",
+  "short_name": "Autonomia",
+  "start_url": "./painel/",
+  "display": "standalone",
+  "background_color": "#F4F1EC",
+  "theme_color": "#EFF6EE",
+  "icons": [
+    {
+      "src": "./icone.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

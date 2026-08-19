@@ -16,5 +16,18 @@ service cloud.firestore {
       allow delete: if request.auth != null
         && resource.data.uid == request.auth.uid;
     }
+
+    // Tokens de dispositivo para notificações push (FCM). Cada documento
+    // só pode ser lido/escrito pelo próprio dono (uid == usuário logado) —
+    // as Cloud Functions acessam isso via Admin SDK, que ignora estas
+    // regras (têm acesso privilegiado), então isso só restringe o acesso
+    // vindo do cliente (navegador).
+    match /dispositivos/{dispositivoId} {
+      allow read, write: if request.auth != null
+        && request.resource.data.uid == request.auth.uid;
+
+      allow read, delete: if request.auth != null
+        && resource.data.uid == request.auth.uid;
+    }
   }
 }
