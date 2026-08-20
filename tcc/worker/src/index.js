@@ -163,7 +163,7 @@ async function excluirDocumento(token, caminhoDocumento) {
 // FCM HTTP v1 (envio da notificação push)
 // --------------------------------------------------------------------
 
-async function enviarPush(projectId, token, dispositivo, titulo, corpo, tag) {
+async function enviarPush(projectId, token, dispositivo, titulo, corpo, tag, tarefaId) {
   const url = `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`;
   const resposta = await fetch(url, {
     method: "POST",
@@ -172,8 +172,12 @@ async function enviarPush(projectId, token, dispositivo, titulo, corpo, tag) {
       message: {
         token: dispositivo.fcmToken,
         notification: { title: titulo, body: corpo },
-        data: { tag: tag || "rotina", url: "/painel/" },
-        webpush: { fcm_options: { link: "/painel/" } },
+        data: {
+          tag: tag || "rotina",
+          tarefaId: tarefaId ? String(tarefaId) : "",
+          url: "https://marimoreiraa.github.io/tcc/painel/",
+        },
+        webpush: { fcm_options: { link: "https://marimoreiraa.github.io/tcc/painel/" } },
       },
     }),
   });
@@ -229,7 +233,8 @@ async function processarLembretesParticipante(projectId, token, dispositivos, ta
       dispositivo,
       "Hora da Tarefa!",
       "Verifique se você possui tarefas no aplicativo.",
-      `hora-tarefa-${tarefaAtiva.id}`
+      `hora-tarefa-${tarefaAtiva.id}`,
+      tarefaAtiva.id
     );
 
     await atualizarCampos(token, tarefaAtiva.caminho, { ultimoLembreteEm: new Date() });
@@ -253,7 +258,7 @@ async function processarAvisosCuidador(projectId, token, dispositivos, todasTare
     const acao = tarefa.status === "recusada" ? "recusada" : "concluída";
     await Promise.all(
       cuidadores.map((c) =>
-        enviarPush(projectId, token, c, "Atualização de Rotina", `A tarefa "${tarefa.titulo}" foi ${acao}!`, `rotina-${tarefa.id}`)
+        enviarPush(projectId, token, c, "Atualização de Rotina", `A tarefa "${tarefa.titulo}" foi ${acao}!`, `rotina-${tarefa.id}`, tarefa.id)
       )
     );
 

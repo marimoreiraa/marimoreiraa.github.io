@@ -29,7 +29,7 @@ messaging.onBackgroundMessage((payload) => {
   const titulo = payload.notification?.title || "Rotina";
   const opcoes = {
     body: payload.notification?.body || "",
-    icon: "/icone.png",
+    icon: "./icone.png",
     tag: payload.data?.tag || "rotina-push",
     requireInteraction: true,
   };
@@ -74,13 +74,14 @@ self.addEventListener("notificationclick", (evento) => {
   evento.notification.close();
   evento.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(async (clientes) => {
+      const urlPainel = new URL("./painel/", self.registration.scope).href;
       const cliente = clientes.find((item) => "focus" in item);
       if (cliente) {
         await cliente.focus();
-        if ("navigate" in cliente) await cliente.navigate("./painel/");
+        if ("navigate" in cliente) await cliente.navigate(urlPainel);
         return cliente;
       }
-      return self.clients.openWindow("./painel/");
+      return self.clients.openWindow(urlPainel);
     }),
   );
 });

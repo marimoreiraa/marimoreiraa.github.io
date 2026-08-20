@@ -45,9 +45,11 @@ export async function registrarDispositivoPush(app, db, uid, papel) {
       return null;
     }
 
-    // sw.js (na raiz do projeto) já trata mensagens em segundo plano —
-    // ver a seção adicionada nele com importScripts do firebase-messaging.
-    const registroSW = await navigator.serviceWorker.register("/sw.js");
+    // O módulo fica em /tcc/static/shared e o Service Worker em /tcc/sw.js.
+    // Usar URL relativa ao módulo evita quebrar no GitHub Pages, cujo site
+    // é servido dentro do subcaminho /tcc/.
+    const urlSW = new URL("../../sw.js", import.meta.url);
+    const registroSW = await navigator.serviceWorker.register(urlSW);
 
     const messaging = getMessaging(app);
     const token = await getToken(messaging, {
@@ -83,7 +85,7 @@ export async function registrarDispositivoPush(app, db, uid, papel) {
       // No modo pessoal, a tela aberta já mostra a tarefa e toca seu áudio.
       if (papel === "participante" && document.visibilityState === "visible") return;
       if (Notification.permission === "granted") {
-        registroSW.showNotification(titulo, { body: corpo, icon: "/icone.png" });
+        registroSW.showNotification(titulo, { body: corpo, icon: "./icone.png" });
       }
     });
 

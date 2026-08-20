@@ -1,0 +1,27 @@
+# Cloudflare Workers
+**/.wrangler/
+
+# Dependencias Node.js
+**/node_modules/
+
+# Segredos e variaveis locais
+.env
+.env.*
+!.env.example
+
+# Logs e artefatos de execucao
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Arquivos do sistema e editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Saidas de build
+**/dist/
+**/build/
