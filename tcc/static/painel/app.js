@@ -83,38 +83,6 @@ function preencherConteudoTarefa(tarefa) {
   tituloTarefa.hidden = modoExibicao !== "pessoal";
 }
 
-function chaveNotificacao(tarefa) {
-  return `notificacao:${new Date().toISOString().slice(0, 10)}:${tarefa.id}`;
-}
-
-async function notificarHoraDaTarefa(tarefa) {
-  if (!("Notification" in window) || Notification.permission !== "granted") return;
-
-  const chave = chaveNotificacao(tarefa);
-  const ultimaNotificacao = Number(localStorage.getItem(chave) || 0);
-  if (Date.now() - ultimaNotificacao < INTERVALO_REPETICAO_MS) return;
-
-  const opcoes = {
-    body: tarefa.textoInstrucao || tarefa.titulo,
-    icon: "../icone.png",
-    tag: `hora-tarefa-${tarefa.id}`,
-    renotify: ultimaNotificacao > 0,
-    requireInteraction: true,
-  };
-
-  try {
-    const registro = await navigator.serviceWorker?.ready;
-    if (registro) {
-      await registro.showNotification("Hora da Tarefa!", opcoes);
-    } else {
-      new Notification("Hora da Tarefa!", opcoes);
-    }
-    localStorage.setItem(chave, String(Date.now()));
-  } catch (erro) {
-    console.warn("Não foi possível exibir a notificação da tarefa:", erro);
-  }
-}
-
 btnConfiguracoes.addEventListener("click", () => {
   configuracoes.hidden = !configuracoes.hidden;
 });
@@ -169,7 +137,6 @@ function atualizarTarefaAtiva() {
       exibirTarefa(tarefa);
     } else if (Date.now() - ultimoAudioTocadoEm >= INTERVALO_REPETICAO_MS) {
       tocarAudioInstrucao(tarefa.audioBase64);
-      notificarHoraDaTarefa(tarefa);
     }
   } else {
     tarefaAtualId = null;
@@ -198,7 +165,6 @@ function exibirTarefa(tarefa) {
   btnConcluir.disabled = false;
   btnRecusar.disabled = false;
   tocarAudioInstrucao(tarefa.audioBase64);
-  notificarHoraDaTarefa(tarefa);
 }
 
 async function concluirTarefa() {

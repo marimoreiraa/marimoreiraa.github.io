@@ -79,8 +79,8 @@ export async function registrarDispositivoPush(app, db, uid, papel) {
     // Notificações recebidas com o app em primeiro plano não passam pelo
     // Service Worker — tratamos aqui pra também aparecer nesse caso.
     onMessage(messaging, (payload) => {
-      const titulo = payload.notification?.title || "Rotina";
-      const corpo = payload.notification?.body || "";
+      const titulo = payload.data?.titulo || payload.notification?.title || "Rotina";
+      const corpo = payload.data?.corpo || payload.notification?.body || "";
       window.dispatchEvent(new CustomEvent("tarefa-notificacao", { detail: payload }));
       // No modo pessoal, a tela aberta já mostra a tarefa e toca seu áudio.
       if (papel === "participante" && document.visibilityState === "visible") return;

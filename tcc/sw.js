@@ -25,10 +25,18 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage((payload) => {
-  const titulo = payload.notification?.title || "Rotina";
+messaging.onBackgroundMessage(async (payload) => {
+  const clientesVisiveis = await self.clients.matchAll({
+    type: "window",
+    includeUncontrolled: true,
+  });
+
+  // Com o PWA aberto, a própria tela já exibe a tarefa e toca o áudio.
+  if (clientesVisiveis.some((cliente) => cliente.visibilityState === "visible")) return;
+
+  const titulo = payload.data?.titulo || payload.notification?.title || "Rotina";
   const opcoes = {
-    body: payload.notification?.body || "",
+    body: payload.data?.corpo || payload.notification?.body || "",
     icon: "./icone.png",
     tag: payload.data?.tag || "rotina-push",
     requireInteraction: true,

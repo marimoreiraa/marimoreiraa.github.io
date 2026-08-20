@@ -16,6 +16,31 @@
  */
 
 const INTERVALO_REPETICAO_MS = 10 * 60 * 1000;
+const FUSO_HORARIO = "America/Sao_Paulo";
+
+const formatadorDataLocal = new Intl.DateTimeFormat("en-CA", {
+  timeZone: FUSO_HORARIO,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+  weekday: "short",
+});
+
+function obterDataHoraLocal(data = new Date()) {
+  const partes = Object.fromEntries(
+    formatadorDataLocal.formatToParts(data).map(({ type, value }) => [type, value])
+  );
+  const diasDaSemana = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+
+  return {
+    data: `${partes.year}-${partes.month}-${partes.day}`,
+    dia: diasDaSemana[partes.weekday],
+    horario: `${partes.hour}:${partes.minute}`,
+  };
+}
 
 // --------------------------------------------------------------------
 // Autenticação: troca a conta de serviço por um token de acesso OAuth2.
@@ -171,8 +196,9 @@ async function enviarPush(projectId, token, dispositivo, titulo, corpo, tag, tar
     body: JSON.stringify({
       message: {
         token: dispositivo.fcmToken,
-        notification: { title: titulo, body: corpo },
         data: {
+            titulo,
+            corpo,
           tag: tag || "rotina",
           tarefaId: tarefaId ? String(tarefaId) : "",
           url: "https://marimoreiraa.github.io/tcc/painel/",
@@ -202,13 +228,13 @@ function tarefaConcluidaHoje(tarefa) {
   const dataFinalizacao = tarefa.statusEm || tarefa.concluidaEm;
   if (!dataFinalizacao) return false;
   const data = dataFinalizacao instanceof Date ? dataFinalizacao : new Date(dataFinalizacao);
-  return data.toDateString() === new Date().toDateString();
+  return obterDataHoraLocal(data).data === obterDataHoraLocal().data;
 }
 
 async function processarLembretesParticipante(projectId, token, dispositivos, tarefasPorUid) {
-  const agora = new Date();
-  const diaAtual = agora.getDay();
-  const horarioAtual = agora.toTimeString().slice(0, 5);
+  const agora = obterDataHoraLocal();
+  const diaAtual = agora.dia;
+  const horarioAtual = agora.horario;
 
   for (const dispositivo of dispositivos.filter((d) => d.papel === "participante")) {
     const tarefas = tarefasPorUid[dispositivo.uid] || [];
