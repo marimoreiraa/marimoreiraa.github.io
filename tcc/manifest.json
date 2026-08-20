@@ -1,6 +1,6 @@
 {
-  "name": "Painel Autonomia",
-  "short_name": "Autonomia",
+  "name": "Meu Ritmo - Apoio à Rotina e Autonomia",
+  "short_name": "Meu Ritmo",
   "start_url": "./painel/",
   "display": "standalone",
   "background_color": "#F4F1EC",
