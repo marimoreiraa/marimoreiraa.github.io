@@ -79,6 +79,9 @@ export async function registrarDispositivoPush(app, db, uid, papel) {
     onMessage(messaging, (payload) => {
       const titulo = payload.notification?.title || "Rotina";
       const corpo = payload.notification?.body || "";
+      window.dispatchEvent(new CustomEvent("tarefa-notificacao", { detail: payload }));
+      // No modo pessoal, a tela aberta já mostra a tarefa e toca seu áudio.
+      if (papel === "participante" && document.visibilityState === "visible") return;
       if (Notification.permission === "granted") {
         registroSW.showNotification(titulo, { body: corpo, icon: "/icone.png" });
       }

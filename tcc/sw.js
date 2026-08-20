@@ -73,9 +73,14 @@ self.addEventListener("fetch", (evento) => {
 self.addEventListener("notificationclick", (evento) => {
   evento.notification.close();
   evento.waitUntil(
-    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientes) => {
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(async (clientes) => {
       const cliente = clientes.find((item) => "focus" in item);
-      return cliente ? cliente.focus() : self.clients.openWindow("./painel/");
+      if (cliente) {
+        await cliente.focus();
+        if ("navigate" in cliente) await cliente.navigate("./painel/");
+        return cliente;
+      }
+      return self.clients.openWindow("./painel/");
     }),
   );
 });
