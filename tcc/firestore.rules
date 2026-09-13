@@ -17,6 +17,17 @@ service cloud.firestore {
         && resource.data.uid == request.auth.uid;
     }
 
+    match /logs_pesquisa/{logId} {
+      allow create: if request.auth != null
+        && request.resource.data.idUsuario == request.auth.uid
+        && request.resource.data.emailParticipante == request.auth.token.email;
+
+      allow read: if request.auth != null
+        && request.auth.token.email == "0076895@academico.ifmg.edu.br";
+
+      allow update, delete: if false;
+    }
+
     // Tokens de dispositivo para notificações push (FCM). Cada documento
     // só pode ser lido/escrito pelo próprio dono (uid == usuário logado) —
     // as Cloud Functions acessam isso via Admin SDK, que ignora estas

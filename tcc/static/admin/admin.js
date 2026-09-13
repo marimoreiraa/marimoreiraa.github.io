@@ -1,5 +1,5 @@
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-import { collection, addDoc, deleteDoc, doc, onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+import { collection, addDoc, deleteDoc, doc, getDocs, onSnapshot, query, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 import { registrarDispositivoPush } from "../shared/push.js";
 
 const auth = window.auth;
@@ -25,6 +25,8 @@ const btnSair = document.getElementById("btn-sair");
 
 let cancelarListenerTarefas = null;
 let listenerInicializado = false;
+let usuarioAtual = null;
+let tarefasAtuais = [];
 
 async function solicitarPermissaoNotificacoes() {
   if (!("Notification" in window) || Notification.permission !== "default") return;
@@ -57,6 +59,7 @@ async function notificarAtualizacao(tarefa) {
 solicitarPermissaoNotificacoes();
 
 onAuthStateChanged(auth, (usuario) => {
+  usuarioAtual = usuario;
   if (!usuario) {
     window.location.replace("../login/");
     return;
@@ -82,9 +85,9 @@ onAuthStateChanged(auth, (usuario) => {
     }
     listenerInicializado = true;
 
-    const tarefas = snapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
-    tarefas.sort((a, b) => a.horario.localeCompare(b.horario));
-    renderizarTarefas(tarefas);
+    tarefasAtuais = snapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
+    tarefasAtuais.sort((a, b) => a.horario.localeCompare(b.horario));
+    renderizarTarefas(tarefasAtuais);
   }, () => {
     listaTarefas.innerHTML = "<p class='carregando'>Não foi possível carregar as tarefas.</p>";
   });

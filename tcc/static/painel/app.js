@@ -30,7 +30,7 @@ const seletorModo = document.getElementById("modo-exibicao");
 const mostrarTextoFixo = document.getElementById("mostrar-texto-fixo");
 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-import { collection, onSnapshot, updateDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+import { addDoc, collection, onSnapshot, updateDoc, doc, query, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 import { registrarDispositivoPush } from "../shared/push.js";
 
 const auth = window.auth;
@@ -38,22 +38,46 @@ const db = window.db;
 const firebaseApp = window.firebaseApp;
 
 const INTERVALO_REPETICAO_MS = 10 * 60 * 1000;
+const TEMPO_TELA_LIVRE_APOS_FINALIZAR_MS = 1800;
 
 let telaAtual = "inicio";
 let tarefaAtualId = null;
 let tarefas = [];
 let ultimoAudioTocadoEm = 0;
+let usouAudioSobDemanda = false;
 let cancelarListenerTarefas = null;
 let tarefaAtual = null;
 let modoExibicao = localStorage.getItem("modoExibicao") || "fixo";
 let exibirTextoNoFixo = localStorage.getItem("mostrarTextoFixo") === "true";
 let uidAtual = null;
 let pushJaRegistrado = false;
+let aguardandoProximaTarefa = false;
+let timerProximaTarefa = null;
 
 async function registrarPushSeNecessario() {
   if (!uidAtual || pushJaRegistrado) return;
   const token = await registrarDispositivoPush(firebaseApp, db, uidAtual, "participante");
   if (token) pushJaRegistrado = true;
+}
+
+async function salvarLogExecucao(idTarefa, nomeTarefa, modoUso, acao) {
+  if (!idTarefa || !nomeTarefa || !modoUso || !acao || !auth?.currentUser) return;
+
+  try {
+    await addDoc(collection(db, "logs_pesquisa"), {
+      idUsuario: auth.currentUser.uid,
+      emailParticipante: auth.currentUser.email || "",
+      idTarefa,
+      nomeTarefa,
+      modoUso,
+      acao,
+      usoAudio: Boolean(usouAudioSobDemanda),
+      horarioPrevisto: tarefaAtual?.horario || "",
+      timestampReal: serverTimestamp(),
+    });
+  } catch (erro) {
+    console.error("Erro ao salvar log de execução:", erro);
+  }
 }
 
 async function solicitarPermissaoNotificacoes() {
@@ -123,6 +147,8 @@ async function iniciar() {
 }
 
 function atualizarTarefaAtiva() {
+  if (aguardandoProximaTarefa) return;
+
   const agora = new Date();
   const diaAtual = agora.getDay();
   const horarioAtual = agora.toTimeString().slice(0, 5);
@@ -156,8 +182,14 @@ function tocarAudioInstrucao(audioBase64) {
   ultimoAudioTocadoEm = Date.now();
 }
 
+function pararAudioInstrucao() {
+  audioTarefa.pause();
+  audioTarefa.currentTime = 0;
+}
+
 function exibirTarefa(tarefa) {
   tarefaAtual = tarefa;
+  usouAudioSobDemanda = false;
   fotoTarefa.src = tarefa.imagemBase64 || "";
   preencherConteudoTarefa(tarefa);
   btnRecusar.hidden = tarefa.opcional !== true;
@@ -184,9 +216,18 @@ async function recusarTarefa() {
 async function finalizarTarefa(status) {
   if (!tarefaAtualId) return false;
 
+  const tarefaFinal = tarefaAtual;
+  const idFinalizado = tarefaAtualId;
+  const nomeTarefa = tarefaFinal?.titulo || "Tarefa";
+  const modoUso = modoExibicao === "pessoal" ? "Pessoal" : "Fixo";
+  const acao = status === "concluida" ? "Concluida" : "Recusada";
+
+  aguardandoProximaTarefa = true;
+  clearTimeout(timerProximaTarefa);
+  pararAudioInstrucao();
+
   btnConcluir.disabled = true;
   btnRecusar.disabled = true;
-  const idFinalizado = tarefaAtualId;
   const finalizadaEm = new Date().toISOString();
 
   try {
@@ -196,13 +237,22 @@ async function finalizarTarefa(status) {
       concluidaEm: status === "concluida" ? finalizadaEm : null,
     });
 
+    await salvarLogExecucao(idFinalizado, nomeTarefa, modoUso, acao);
+
     tarefaAtualId = null;
     tarefaAtual = null;
     ultimoAudioTocadoEm = 0;
     mostrarTela(telaLivre, "livre");
+
+    timerProximaTarefa = setTimeout(() => {
+      aguardandoProximaTarefa = false;
+      atualizarTarefaAtiva();
+    }, TEMPO_TELA_LIVRE_APOS_FINALIZAR_MS);
+
     return true;
   } catch (erro) {
     console.error(`Erro ao marcar tarefa como ${status}:`, erro);
+    aguardandoProximaTarefa = false;
     btnConcluir.disabled = false;
     btnRecusar.disabled = false;
     return false;
@@ -213,6 +263,7 @@ async function finalizarTarefa(status) {
 // de o autoplay ter funcionado).
 fotoTarefa.addEventListener("click", () => {
   if (audioTarefa.src) {
+    usouAudioSobDemanda = true;
     audioTarefa.currentTime = 0;
     audioTarefa.play().catch(() => {});
   }

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6936D5">
+  <link rel="manifest" href="../manifest.json">
+  <title>Visão da Pesquisa | IHC &amp; Disfunção Executiva TEA</title>
+  <link rel="stylesheet" href="../static/pesquisadora/pesquisadora.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="topo">
+      <div>
+        <p class="eyebrow">Acesso restrito • Pesquisa TEA &amp; IHC</p>
+        <h1>📊 Visão da Pesquisa</h1>
+      </div>
+      <div class="acoes-header">
+        <button type="button" id="btn-sair" class="btn-sair">Sair</button>
+      </div>
+    </header>
+
+    <section class="card painel-pesquisa">
+      <div class="visao-header">
+        <div class="visao-titulo-wrap">
+          <h2>Métricas de Acessibilidade e Execução</h2>
+          <label class="filtro-participante-label" for="filtro-participante">
+            Participante
+            <select id="filtro-participante">
+              <option value="GERAL">Consolidado geral</option>
+            </select>
+          </label>
+        </div>
+        <button type="button" id="btn-exportar-csv" class="btn-exportar-csv">Exportar CSV</button>
+      </div>
+
+      <!-- Grid de Métricas Principais -->
+      <div class="metricas-grid">
+        <article class="metrica-card">
+          <span class="metrica-label">Total disparadas</span>
+          <strong id="metric-total">0</strong>
+        </article>
+        <article class="metrica-card">
+          <span class="metrica-label">Taxa de conclusão</span>
+          <strong id="metric-conclusao">0%</strong>
+        </article>
+        <article class="metrica-card">
+          <span class="metrica-label">Taxa de recusa</span>
+          <strong id="metric-recusa">0%</strong>
+        </article>
+        <article class="metrica-card">
+          <span class="metrica-label">Taxa de omissão</span>
+          <strong id="metric-omissao">0%</strong>
+        </article>
+        <article class="metrica-card">
+          <span class="metrica-label">Uso de áudio</span>
+          <strong id="metric-audio">0</strong>
+        </article>
+        <article class="metrica-card">
+          <span class="metrica-label">Diferença média (min)</span>
+          <strong id="metric-diferenca">0</strong>
+        </article>
+      </div>
+
+      <!-- Gráficos de Análise IHC e Turnos -->
+      <div class="graficos-grid">
+        <div class="grafico-card">
+          <h3>Distribuição de Ações</h3>
+          <div class="canvas-wrapper">
+            <canvas id="grafico-status" height="200"></canvas>
+          </div>
+        </div>
+        <div class="grafico-card">
+          <h3>Conclusão vs Recusa por Modo</h3>
+          <div class="canvas-wrapper">
+            <canvas id="grafico-modo" height="200"></canvas>
+          </div>
+        </div>
+        <div class="grafico-card">
+          <h3>Execução por Turno</h3>
+          <div class="canvas-wrapper">
+            <canvas id="grafico-turno" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gargalos de AVDs (Maior Latência Média) -->
+      <div class="secao-gargalos">
+        <div class="secao-titulo-wrap">
+          <h3>⚠️ Gargalos de AVDs (Maior Latência Média)</h3>
+          <span class="subtitulo-secao">Top 5 tarefas com maior atraso entre horário previsto e execução real</span>
+        </div>
+        <div class="tabela-area">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 80px;">Posição</th>
+                <th>Tarefa</th>
+                <th>Latência Média</th>
+                <th>Total de Execuções</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-gargalos-body">
+              <tr>
+                <td colspan="4" class="linha-vazia">Nenhum dado de latência disponível.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Histórico Completo de Logs -->
+      <div class="secao-historico">
+        <div class="secao-titulo-wrap">
+          <h3>📋 Histórico Detalhado de Interações</h3>
+        </div>
+        <div class="tabela-area">
+          <table>
+            <thead>
+              <tr>
+                <th>Participante</th>
+                <th>Data/Hora</th>
+                <th>Tarefa</th>
+                <th>Modo</th>
+                <th>Horário Previsto</th>
+                <th>Ação</th>
+                <th>Áudio?</th>
+                <th>Turno</th>
+              </tr>
+            </thead>
+            <tbody id="historico-logs-body">
+              <tr>
+                <td colspan="8" class="linha-vazia">Nenhum dado de pesquisa disponível.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCWETQhgszkYUtuADX0SZ14CkxuP_ekz8M",
+      authDomain: "rotina-tea.firebaseapp.com",
+      projectId: "rotina-tea",
+      storageBucket: "rotina-tea.firebasestorage.app",
+      messagingSenderId: "153201667136",
+      appId: "1:153201667136:web:e0e891c2cd45d29e9703a5"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    window.firebaseApp = app;
+    window.auth = getAuth(app);
+    window.db = getFirestore(app);
+
+    await import("../static/pesquisadora/pesquisadora.js");
+  </script>
+</body>
+</html>

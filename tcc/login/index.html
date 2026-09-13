@@ -55,9 +55,18 @@
     const form = document.getElementById("form-login");
     const botao = document.getElementById("btn-entrar");
     const mensagem = document.getElementById("mensagem");
+    const EMAIL_PESQUISADORA = "0076895@academico.ifmg.edu.br";
+
+    function redirecionarPorPerfil(usuario) {
+      if (!usuario || !usuario.email) return;
+
+      const email = usuario.email.trim().toLowerCase();
+      const destino = email === EMAIL_PESQUISADORA.toLowerCase() ? "../pesquisadora/" : "../admin/";
+      window.location.replace(destino);
+    }
 
     onAuthStateChanged(auth, (usuario) => {
-      if (usuario) window.location.replace("../admin/");
+      if (usuario) redirecionarPorPerfil(usuario);
     });
 
     form.addEventListener("submit", async (evento) => {
@@ -65,8 +74,8 @@
       botao.disabled = true;
       mensagem.textContent = "";
       try {
-        await signInWithEmailAndPassword(auth, form.email.value.trim(), form.senha.value);
-        window.location.replace("../admin/");
+        const credenciais = await signInWithEmailAndPassword(auth, form.email.value.trim(), form.senha.value);
+        redirecionarPorPerfil(credenciais.user);
       } catch (erro) {
         console.error("Erro ao entrar:", erro);
         mensagem.textContent = "E-mail ou senha inválidos.";

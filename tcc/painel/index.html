@@ -81,7 +81,7 @@
     if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
       navigator.serviceWorker.register("../sw.js").catch(console.error);
     }
-    await import("../static/painel/app.js");
+    await import(`../static/painel/app.js?v=${Date.now()}`);
   </script>
 </body>
 </html>
