@@ -5,7 +5,13 @@ module.exports = defineConfig({
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: 0,
-  reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",
+  reporter: process.env.CI
+    ? [
+        ["list"],
+        ["html", { open: "never" }],
+        ["json", { outputFile: "test-results/playwright-results.json" }],
+      ]
+    : "list",
   use: {
     baseURL: "http://127.0.0.1:4173",
     serviceWorkers: "block",

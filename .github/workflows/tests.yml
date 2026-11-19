@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,9 +19,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
       - name: Run Jest tests
-        run: npm test
+        run: npm test -- --json --outputFile=jest-results.json
       - name: Upload Jest coverage report
         if: ${{ !cancelled() && hashFiles('coverage/**') != '' }}
         uses: actions/upload-artifact@v4
@@ -33,6 +33,47 @@ jobs:
         run: npx playwright test
         env:
           PLAYWRIGHT_HTML_OPEN: never
+      - name: Add test results to job summary
+        if: always()
+        run: |
+          node <<'NODE'
+          const fs = require("node:fs");
+
+          function readJson(file) {
+            try {
+              return JSON.parse(fs.readFileSync(file, "utf8"));
+            } catch {
+              return null;
+            }
+          }
+
+          const jest = readJson("jest-results.json");
+          const playwright = readJson("test-results/playwright-results.json");
+          const coverage = readJson("coverage/coverage-summary.json");
+          const rows = [
+            "| Suíte | Passou | Falhou | Ignorado | Resultado |",
+            "| --- | ---: | ---: | ---: | --- |",
+          ];
+
+          rows.push(jest
+            ? `| Jest | ${jest.numPassedTests} | ${jest.numFailedTests} | ${jest.numPendingTests} | ${jest.success ? "Passou" : "Falhou"} |`
+            : "| Jest | — | — | — | Sem relatório |");
+          rows.push(playwright
+            ? `| Playwright | ${playwright.stats.expected} | ${playwright.stats.unexpected} | ${playwright.stats.skipped} | ${playwright.stats.unexpected === 0 ? "Passou" : "Falhou"} |`
+            : "| Playwright | — | — | — | Sem relatório |");
+
+          const lines = ["## Resultado dos testes", "", ...rows];
+          if (coverage?.total) {
+            lines.push(
+              "",
+              `Cobertura Jest: statements ${coverage.total.statements.pct}%, branches ${coverage.total.branches.pct}%, functions ${coverage.total.functions.pct}%, lines ${coverage.total.lines.pct}%.`
+            );
+          } else {
+            lines.push("", "Relatório de cobertura Jest indisponível.");
+          }
+
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);
+          NODE
       - name: Upload Playwright report on failure
         if: failure()
         uses: actions/upload-artifact@v4
