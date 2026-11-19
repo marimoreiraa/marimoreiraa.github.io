@@ -29,3 +29,4 @@ Thumbs.db
 # Resultados Playwright
 playwright-report/
 test-results/
+jest-results.json
