@@ -1,6 +1,9 @@
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 import { collection, addDoc, deleteDoc, doc, getDocs, onSnapshot, query, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 import { registrarDispositivoPush } from "../shared/push.js";
+import "./utils.js";
+
+const { ehArquivoHeic, nomeArquivoJpeg, tarefaFinalizadaHoje } = globalThis.AdminUtils;
 
 const auth = window.auth;
 const db = window.db;
@@ -203,12 +206,7 @@ function pararGravacao() {
 // --------------------------------------------------------------------
 
 async function converterSeNecessario(arquivo) {
-  const isHeic =
-    /\.(heic|heif)$/i.test(arquivo.name) ||
-    arquivo.type === "image/heic" ||
-    arquivo.type === "image/heif";
-
-  if (!isHeic) return arquivo;
+  if (!ehArquivoHeic(arquivo)) return arquivo;
 
   const blobConvertido = await heic2any({
     blob: arquivo,
@@ -216,7 +214,7 @@ async function converterSeNecessario(arquivo) {
     quality: 0.85,
   });
 
-  const novoNome = arquivo.name.replace(/\.(heic|heif)$/i, ".jpg");
+  const novoNome = nomeArquivoJpeg(arquivo.name);
   return new File([blobConvertido], novoNome, { type: "image/jpeg" });
 }
 
@@ -346,11 +344,6 @@ function renderizarTarefas(tarefas) {
     .join("");
 }
 
-function tarefaFinalizadaHoje(tarefa) {
-  const dataFinalizacao = tarefa.statusEm || tarefa.concluidaEm;
-  return dataFinalizacao && new Date(dataFinalizacao).toDateString() === new Date().toDateString();
-}
-
 async function excluirTarefa(id) {
   if (!confirm("Excluir esta tarefa da rotina?")) return;
   try {
@@ -370,4 +363,3 @@ listaTarefas.addEventListener("click", (evento) => {
   const botao = evento.target.closest(".btn-excluir");
   if (botao) excluirTarefa(botao.dataset.id);
 });
-

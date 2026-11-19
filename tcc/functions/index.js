@@ -26,6 +26,7 @@ const { initializeApp } = require("firebase-admin/app");
 const { getFirestore, Timestamp } = require("firebase-admin/firestore");
 const { getMessaging } = require("firebase-admin/messaging");
 const { logger } = require("firebase-functions");
+const { tarefaConcluidaHoje } = require("../shared/notification-utils");
 
 initializeApp();
 const db = getFirestore();
@@ -55,13 +56,6 @@ async function enviarPush(token, docId, titulo, corpo, tag) {
       logger.info(`Dispositivo ${docId} removido (token inválido/expirado).`);
     }
   }
-}
-
-function tarefaConcluidaHoje(tarefa) {
-  const dataFinalizacao = tarefa.statusEm || tarefa.concluidaEm;
-  if (!dataFinalizacao) return false;
-  const data = dataFinalizacao.toDate ? dataFinalizacao.toDate() : new Date(dataFinalizacao);
-  return data.toDateString() === new Date().toDateString();
 }
 
 exports.enviarLembretesAgendados = onSchedule(

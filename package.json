@@ -1,0 +1,16 @@
+{
+  "name": "marimoreiraa.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "jest --coverage",
+    "test:e2e": "playwright test"
+  },
+  "jest": {
+    "testMatch": ["**/*.test.js"]
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "jest": "^30.2.0"
+  }
+}

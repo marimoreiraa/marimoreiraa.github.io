@@ -25,3 +25,7 @@ Thumbs.db
 # Saidas de build
 **/dist/
 **/build/
+
+# Resultados Playwright
+playwright-report/
+test-results/

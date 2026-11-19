@@ -23,6 +23,7 @@
  */
 
 const admin = require("firebase-admin");
+const { tarefaConcluidaHoje } = require("../shared/notification-utils");
 
 const credencialJson = process.env.FIREBASE_SERVICE_ACCOUNT;
 if (!credencialJson) {
@@ -58,13 +59,6 @@ async function enviarPush(token, docId, titulo, corpo, tag, tarefaId) {
       console.log(`Dispositivo ${docId} removido (token inválido/expirado).`);
     }
   }
-}
-
-function tarefaConcluidaHoje(tarefa) {
-  const dataFinalizacao = tarefa.statusEm || tarefa.concluidaEm;
-  if (!dataFinalizacao) return false;
-  const data = dataFinalizacao.toDate ? dataFinalizacao.toDate() : new Date(dataFinalizacao);
-  return data.toDateString() === new Date().toDateString();
 }
 
 async function processarLembretesParticipante() {

@@ -9,8 +9,11 @@ const ARQUIVOS_INICIAIS = [
   "./icone.png",
   "./static/painel/style.css",
   "./static/painel/app.js",
+  "./static/painel/utils.js",
   "./static/admin/admin.css",
   "./static/admin/admin.js",
+  "./static/admin/utils.js",
+  "./static/shared/push-utils.js",
   "./static/sounds/sucesso.wav"
 ];
 

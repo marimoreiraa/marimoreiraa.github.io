@@ -19,8 +19,10 @@
 
 import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-messaging.js";
 import { doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+import "./push-utils.js";
 
 const VAPID_KEY = "BPTeX9hrah39CuzwAZRhoS50p9hDMsK6mu5oozRAJ45ceQZlOGFOfhejirV1DyCJyw5cbeAbptZVKfsXXv_jHsE";
+const { criarIdDocumentoDispositivo } = globalThis.PushUtils;
 
 /**
  * Solicita permissão de notificação, obtém o token FCM deste dispositivo/
@@ -64,7 +66,7 @@ export async function registrarDispositivoPush(app, db, uid, papel) {
 
     // Um documento por combinação uid+papel+token evita duplicados quando
     // o mesmo dispositivo registra de novo (ex.: reabriu o app).
-    const idDocumento = `${uid}_${papel}`;
+    const idDocumento = criarIdDocumentoDispositivo(uid, papel);
     await setDoc(
       doc(db, "dispositivos", idDocumento),
       {
