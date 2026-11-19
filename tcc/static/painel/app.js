@@ -32,6 +32,9 @@ const mostrarTextoFixo = document.getElementById("mostrar-texto-fixo");
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 import { addDoc, collection, onSnapshot, updateDoc, doc, query, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 import { registrarDispositivoPush } from "../shared/push.js";
+import "./utils.js";
+
+const { selecionarTarefaAtiva, tarefaConcluidaHoje } = globalThis.PainelUtils;
 
 const auth = window.auth;
 const db = window.db;
@@ -152,10 +155,7 @@ function atualizarTarefaAtiva() {
   const agora = new Date();
   const diaAtual = agora.getDay();
   const horarioAtual = agora.toTimeString().slice(0, 5);
-  const tarefa = tarefas
-    .filter((item) => (item.dias || [0, 1, 2, 3, 4, 5, 6]).includes(diaAtual))
-    .filter((item) => item.horario <= horarioAtual && !tarefaConcluidaHoje(item))
-    .sort((a, b) => a.horario.localeCompare(b.horario))[0];
+  const tarefa = selecionarTarefaAtiva(tarefas, diaAtual, horarioAtual);
 
   if (tarefa) {
     if (tarefa.id !== tarefaAtualId) {
@@ -268,11 +268,6 @@ fotoTarefa.addEventListener("click", () => {
     audioTarefa.play().catch(() => {});
   }
 });
-
-function tarefaConcluidaHoje(tarefa) {
-  const dataFinalizacao = tarefa.statusEm || tarefa.concluidaEm;
-  return dataFinalizacao && new Date(dataFinalizacao).toDateString() === new Date().toDateString();
-}
 
 onAuthStateChanged(auth, (usuario) => {
   if (!usuario) {

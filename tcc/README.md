@@ -60,6 +60,30 @@ Acesse `http://localhost:8000/tcc/login/` no navegador. Se o servidor for inicia
 2. No celular do cuidador e no dispositivo fixo, abra as opcoes do navegador e clique em **Adicionar a Tela Inicial**.
 3. O sistema sera instalado no dispositivo como um aplicativo nativo (PWA).
 
+## Testes automatizados de interface
+
+Na raiz do repositorio:
+
+```bash
+npm ci
+npx playwright install chromium
+npm run test:e2e
+```
+
+O Playwright inicia e encerra um servidor local automaticamente. Os quatro
+cenarios em `e2e/interface.spec.js` usam a tela inicial autenticada do cuidador
+(`/tcc/admin/`): carregamento, cadastro valido, rejeicao de tarefa sem dias
+selecionados e persistencia depois de recarregar.
+
+Os testes interagem com a interface real, mas interceptam o SDK Firebase com uma
+fixture local autenticada. As tarefas ficam no localStorage do contexto isolado
+de cada teste, sem credenciais nem acesso ao banco de producao. Portanto, o
+cenario de persistencia cobre a restauracao da interface com dados persistidos
+pela fixture; nao valida persistencia, autenticacao ou regras do Firebase real.
+Service Workers sao bloqueados para evitar interferencia de caches; instalacao
+e funcionamento offline do PWA nao fazem parte destes cenarios.
+As suites Jest continuam separadas e podem ser executadas com `npm test`.
+
 ## Como usar
 
 1. **Primeiro acesso:** Pelo app instalado, acesse `/tcc/login/`, clique em **Cadastrar** e crie uma conta para a familia.

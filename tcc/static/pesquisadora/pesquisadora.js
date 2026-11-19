@@ -1,8 +1,16 @@
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+import "./metricas.js";
 
 const auth = window.auth;
 const db = window.db;
+const {
+  obterIdentificacaoParticipante,
+  extrairDataHora,
+  obterTurno,
+  calcularDiferencaMinutos,
+  calcularMetricas,
+} = globalThis.Metricas;
 
 const btnSair = document.getElementById("btn-sair");
 const btnExportarCsv = document.getElementById("btn-exportar-csv");
@@ -33,14 +41,6 @@ function escapeHtml(texto) {
   const div = document.createElement("div");
   div.textContent = String(texto);
   return div.innerHTML;
-}
-
-function obterIdentificacaoParticipante(log) {
-  const email = log.emailParticipante || log.email || log.usuarioEmail || log.emailUsuario;
-  if (email && typeof email === "string" && email.trim()) {
-    return email.trim();
-  }
-  return log.idUsuario || log.uid || "Email não informado";
 }
 
 async function carregarLogsPesquisa() {
@@ -91,170 +91,8 @@ function aplicarFiltroParticipante() {
   renderizarEstatisticas();
 }
 
-function converterHorarioParaMinutos(horario) {
-  if (!horario || typeof horario !== "string" || !horario.includes(":")) return null;
-  const [hora, minuto] = horario.split(":").map(Number);
-  if (isNaN(hora) || isNaN(minuto)) return null;
-  return (hora * 60) + minuto;
-}
-
-function converterTimestampParaMinutos(timestamp) {
-  if (!timestamp) return null;
-  let data = null;
-  if (timestamp.toDate) {
-    data = timestamp.toDate();
-  } else if (timestamp.seconds) {
-    data = new Date(timestamp.seconds * 1000);
-  } else {
-    data = new Date(timestamp);
-  }
-  if (!data || isNaN(data.getTime())) return null;
-  return (data.getHours() * 60) + data.getMinutes();
-}
-
-function extrairDataHora(timestamp) {
-  if (!timestamp) return new Date();
-  if (timestamp.toDate) return timestamp.toDate();
-  if (timestamp.seconds) return new Date(timestamp.seconds * 1000);
-  return new Date(timestamp);
-}
-
-function obterTurno(horarioPrevisto, timestampReal) {
-  let hora = null;
-
-  if (horarioPrevisto && typeof horarioPrevisto === "string" && horarioPrevisto.includes(":")) {
-    const [h] = horarioPrevisto.split(":").map(Number);
-    if (!isNaN(h)) hora = h;
-  }
-
-  if (hora === null && timestampReal) {
-    const d = extrairDataHora(timestampReal);
-    if (!isNaN(d.getTime())) hora = d.getHours();
-  }
-
-  if (hora === null) return "Indefinido";
-
-  // Manhã: 05h-11h59, Tarde: 12h-17h59, Noite: 18h-04h59
-  if (hora >= 5 && hora < 12) return "Manhã";
-  if (hora >= 12 && hora < 18) return "Tarde";
-  return "Noite";
-}
-
-function normalizarModo(modo) {
-  if (!modo) return "Não especificado";
-  const m = String(modo).toLowerCase().trim();
-  if (m.includes("fixo")) return "Fixo";
-  if (m.includes("pessoal")) return "Pessoal";
-  return modo;
-}
-
-function calcularDiferencaMinutos(log) {
-  if (!log.horarioPrevisto || !log.timestampReal) return null;
-  const minutosPrevisto = converterHorarioParaMinutos(log.horarioPrevisto);
-  const minutosReal = converterTimestampParaMinutos(log.timestampReal);
-  if (minutosPrevisto === null || minutosReal === null) return null;
-  return Math.abs(minutosReal - minutosPrevisto);
-}
-
-function calcularMetricas() {
-  const total = logsPesquisa.length;
-  const concluidas = logsPesquisa.filter((log) => log.acao === "Concluida").length;
-  const recusadas = logsPesquisa.filter((log) => log.acao === "Recusada").length;
-  const omitidas = logsPesquisa.filter((log) => log.acao === "Omitida").length;
-
-  const taxaConclusao = total ? (concluidas / total) * 100 : 0;
-  const taxaRecusa = total ? (recusadas / total) * 100 : 0;
-  const taxaOmissao = total ? (omitidas / total) * 100 : 0;
-
-  const totalAudio = logsPesquisa.filter((log) => log.usoAudio === true || log.usoAudio === "true" || log.audio === true).length;
-
-  // Diferença média em minutos
-  const diferencasValidas = [];
-  logsPesquisa.forEach((log) => {
-    const diff = calcularDiferencaMinutos(log);
-    if (diff !== null) diferencasValidas.push(diff);
-  });
-
-  const diferencaMedia = diferencasValidas.length
-    ? diferencasValidas.reduce((soma, valor) => soma + valor, 0) / diferencasValidas.length
-    : 0;
-
-  // Agrupamento por Modo de Uso (Fixo vs Pessoal)
-  const modo = {
-    Fixo: { concluidas: 0, recusadas: 0, omitidas: 0, total: 0 },
-    Pessoal: { concluidas: 0, recusadas: 0, omitidas: 0, total: 0 },
-  };
-
-  // Agrupamento por Turno (Manhã, Tarde, Noite)
-  const turno = {
-    Manha: { concluidas: 0, recusadas: 0, omitidas: 0, total: 0 },
-    Tarde: { concluidas: 0, recusadas: 0, omitidas: 0, total: 0 },
-    Noite: { concluidas: 0, recusadas: 0, omitidas: 0, total: 0 },
-  };
-
-  // Agrupamento de latência por tarefa para Ranking de Gargalos
-  const tarefasMap = new Map();
-
-  logsPesquisa.forEach((log) => {
-    const modoNorm = normalizarModo(log.modoUso);
-    if (modo[modoNorm]) {
-      modo[modoNorm].total += 1;
-      if (log.acao === "Concluida") modo[modoNorm].concluidas += 1;
-      else if (log.acao === "Recusada") modo[modoNorm].recusadas += 1;
-      else if (log.acao === "Omitida") modo[modoNorm].omitidas += 1;
-    }
-
-    const t = obterTurno(log.horarioPrevisto, log.timestampReal);
-    const chaveTurno = t === "Manhã" ? "Manha" : (t === "Tarde" ? "Tarde" : (t === "Noite" ? "Noite" : null));
-    if (chaveTurno && turno[chaveTurno]) {
-      turno[chaveTurno].total += 1;
-      if (log.acao === "Concluida") turno[chaveTurno].concluidas += 1;
-      else if (log.acao === "Recusada") turno[chaveTurno].recusadas += 1;
-      else if (log.acao === "Omitida") turno[chaveTurno].omitidas += 1;
-    }
-
-    // Coleta para gargalos
-    const nomeTarefa = (log.nomeTarefa || "Tarefa sem nome").trim();
-    const diff = calcularDiferencaMinutos(log);
-    if (!tarefasMap.has(nomeTarefa)) {
-      tarefasMap.set(nomeTarefa, { nomeTarefa, somaLatencia: 0, contagemLatencia: 0, totalExecucoes: 0 });
-    }
-    const itemTarefa = tarefasMap.get(nomeTarefa);
-    itemTarefa.totalExecucoes += 1;
-    if (diff !== null) {
-      itemTarefa.somaLatencia += diff;
-      itemTarefa.contagemLatencia += 1;
-    }
-  });
-
-  const topGargalos = Array.from(tarefasMap.values())
-    .filter((item) => item.contagemLatencia > 0)
-    .map((item) => ({
-      nomeTarefa: item.nomeTarefa,
-      latenciaMedia: item.somaLatencia / item.contagemLatencia,
-      totalExecucoes: item.totalExecucoes,
-    }))
-    .sort((a, b) => b.latenciaMedia - a.latenciaMedia)
-    .slice(0, 5);
-
-  return {
-    total,
-    concluidas,
-    recusadas,
-    omitidas,
-    taxaConclusao,
-    taxaRecusa,
-    taxaOmissao,
-    totalAudio,
-    diferencaMedia,
-    modo,
-    turno,
-    topGargalos,
-  };
-}
-
 function renderizarEstatisticas() {
-  const metrica = calcularMetricas();
+  const metrica = calcularMetricas(logsPesquisa);
 
   metricTotal.textContent = String(metrica.total);
   metricConclusao.textContent = `${metrica.taxaConclusao.toFixed(1)}%`;
@@ -432,7 +270,7 @@ function renderizarTabelaLogs() {
 
   historicoLogsBody.innerHTML = logsPesquisa
     .map((log) => {
-      const dataHora = extrairDataHora(log.timestampReal);
+      const dataHora = extrairDataHora(log.timestampReal) || new Date();
       const dataFormatada = !isNaN(dataHora.getTime())
         ? dataHora.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })
         : "-";
@@ -473,7 +311,7 @@ function exportarCsv() {
   ];
 
   const linhas = logsPesquisa.map((log) => {
-    const dataHora = extrairDataHora(log.timestampReal);
+    const dataHora = extrairDataHora(log.timestampReal) || new Date();
     const dataIso = !isNaN(dataHora.getTime()) ? dataHora.toISOString() : "";
     const participante = obterIdentificacaoParticipante(log);
     const turno = obterTurno(log.horarioPrevisto, log.timestampReal);
